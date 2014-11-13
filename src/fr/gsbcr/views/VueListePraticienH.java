@@ -43,6 +43,7 @@ public class VueListePraticienH extends JPanel {
 		
 		modeleTableauPraticienH = new ModeleListePraticienH(modele) ;
 		tableauPraticienH = new JTable(modeleTableauPraticienH) ;
+		tableauPraticienH.setAutoCreateRowSorter(true);
 		tableauPraticienH.setRowHeight(30) ;
 		
 		JScrollPane spPraticienH = new JScrollPane(tableauPraticienH) ;
