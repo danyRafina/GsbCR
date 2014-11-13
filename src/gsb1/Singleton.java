@@ -6,31 +6,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.swing.JOptionPane;
-
 import com.mysql.jdbc.PreparedStatement;
 
 public class Singleton {
-	private String connectionInf = "jdbc:mysql://localhost:3306/GsbCRSlam";
+	private String connectionInf = "jdbc:mysql://localhost:3306/gsbcrslam";
 	private String userName ="root";
-	private String userPass ="mysql";
+	private String userPass ="";
 	private static Statement stmt ;
 	private static Connection instance;
 	private static Singleton aInstance;
 	
-	private Singleton() throws SQLException{
+	private Singleton() throws SQLException ,ModeleException{
 		try {
 			Singleton.instance = DriverManager.getConnection(this.connectionInf,this.userName,this.userPass);
 		}
 		catch(SQLException event){
 			System.out.println("Singleton error");
-			throw event;
+			throw new ModeleException(event.getMessage());
 		}
 		
 		
 	}
 	
-	public static Singleton getAInstance() throws SQLException{
+	public static Singleton getAInstance() throws SQLException, ModeleException{
 		if(Singleton.instance == null){
 			Singleton.aInstance =  new Singleton();
 		}
@@ -57,6 +55,15 @@ public class Singleton {
 		}
 	}
 	
+	public static ResultSet getResult(java.sql.PreparedStatement pstmt) throws SQLException{
+		try {
+			return pstmt.executeQuery();
+		}
+		catch(SQLException event){
+			throw event;
+		}
+	}
+	
 	public static int getResultUpdate(String query) throws SQLException{
 		try {
 			return Singleton.stmt.executeUpdate(query);
@@ -65,12 +72,14 @@ public class Singleton {
 			throw event;
 		}
 	}	
+	
+	
 
 	public static void setStmt(Statement stmt) {
 		Singleton.stmt = stmt;
 	}
 	
-	public static PreparedStatement getPreparedStatement(String query) throws SQLException{
+	public static PreparedStatement prepareStatement(String query) throws SQLException{
 		PreparedStatement pstmt = (PreparedStatement) Singleton.instance.prepareStatement(query);
 		return pstmt;
 		

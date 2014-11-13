@@ -1,8 +1,5 @@
 package gsb1 ;
 
-import java.util.* ;
-import java.awt.event.* ;
-
 import javax.swing.* ;
 import javax.swing.table.* ;
 
@@ -38,6 +35,10 @@ public class ModeleListeVisiteur extends AbstractTableModel {
 		visiteur = modele.getVisiteur() ;
 	}
 	
+	public void setModele(ModeleCompteRendu modele) {
+		this.modele = modele;
+	}
+
 	/** Obtenir le contrôleur
 	 * 
 	 * @return Le contrôleur
@@ -64,6 +65,15 @@ public class ModeleListeVisiteur extends AbstractTableModel {
 	public String getMatriculeCollaborateur(int indiceLigne){
 		//System.out.println("ModeleListeLocations::getNumeroLocation()") ;
 		return visiteur.get(indiceLigne).getsColMatricule() ;
+	}
+	public String getNomCollaborateur(int indiceLigne){
+		//System.out.println("ModeleListeLocations::getNumeroLocation()") ;
+		return visiteur.get(indiceLigne).getsColNom() ;
+	}
+	
+	public String getPrenomCollaborateur(int indiceLigne){
+		//System.out.println("ModeleListeLocations::getNumeroLocation()") ;
+		return visiteur.get(indiceLigne).getsColPrenom() ;
 	}
 	
 	/** Obtenir le véhicule
@@ -176,8 +186,10 @@ public class ModeleListeVisiteur extends AbstractTableModel {
 		switch(indiceColonne){
 			case 6 :
 				return true ;
+		default :
+				return false;
 		}
-		return false ;
+
 	}
 	
 	

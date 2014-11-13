@@ -15,7 +15,7 @@ public class ModeleListePraticienH extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private List<Praticien> praticienH ;
-	private final String[] entetes = {"Nom","Prénom","Adresse","Code postal","Ville","Coefficient de notoriété"} ;
+	private final String[] entetes = {"Nom","Prénom","Ville","Coefficient de notoriété","Coefficient de confiance"} ;
 	private ModeleCompteRendu modele ;
 	
 	/** Créer le modèle de la liste des clients
@@ -70,14 +70,12 @@ public class ModeleListePraticienH extends AbstractTableModel {
 				return praticienH.get(indiceLigne).getPraNom() ;
 			case 1 : 
 				return praticienH.get(indiceLigne).getPraPrenom() ;
-			case 2 :
-				return praticienH.get(indiceLigne).getPraAdresse() ;
-			case 3 : 
-				return praticienH.get(indiceLigne).getPraCP();
-			case 4 : 
+			case 2 : 
 				return praticienH.get(indiceLigne).getPraVille();
-			case 5 : 
+			case 3 : 
 				return praticienH.get(indiceLigne).getPraCoefN();
+			case 4 : 
+				return praticienH.get(indiceLigne).getPraCoefConf();
 			default :
 				return null ;
 		}

@@ -27,8 +27,11 @@ public class EditeurBoutonVisiteur extends DefaultCellEditor {
 		super(checkBox);
 		System.out.println("EditeurBoutonVisiteur::EditeurBoutonVisiteur()") ;
 		this.bouton = new JButton() ;
+		System.out.println("EditeurBoutonVisiteur::EditeurBoutonVisiteur(2)") ;
 		this.bouton.setOpaque(true) ;
+		System.out.println("EditeurBoutonVisiteur::EditeurBoutonVisiteur(3)") ;
 		this.bouton.addActionListener(this.ecouteur) ;
+		System.out.println("EditeurBoutonVisiteur::EditeurBoutonVisiteur(4)") ;
 	}
 
 	/* (non-Javadoc)
@@ -40,8 +43,11 @@ public class EditeurBoutonVisiteur extends DefaultCellEditor {
 		
 		System.out.println("EditeurBoutonVisiteur::getTableCellEditorComponent()") ;
 		this.ecouteur.setRow(row) ;
+		System.out.println("EditeurBoutonVisiteur::getTableCellEditorComponent(::1)") ;
 		this.ecouteur.setColumn(column) ;
+		System.out.println("EditeurBoutonVisiteur::getTableCellEditorComponent(::2)"); 
 		this.ecouteur.setTable(table) ;
+		System.out.println("EditeurBoutonVisiteur::getTableCellEditorComponent(::3)") ;
 		
 		if(value == null){
 			this.bouton.setText("") ;

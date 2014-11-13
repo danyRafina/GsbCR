@@ -34,49 +34,6 @@ public class RenduBoutonVisiteur extends JButton implements TableCellRenderer {
 			this.setText("") ;
 		}
 		this.setEnabled(true) ;
-		/*int etat = ((ModeleListeVisiteur)table.getModel()).getEtat(row) ;
-		
-		switch(etat){
-			case Location.EN_ATTENTE :
-				switch(column){
-					case 6 :
-						this.setEnabled(true) ;
-						break ;
-					case 7 :
-						this.setEnabled(false) ;
-						break ;
-					case 8 :
-						this.setEnabled(true) ;
-						break ;
-				}
-				break ;
-			case Location.EN_COURS :
-				switch(column){
-					case 6 :
-						this.setEnabled(false) ;
-						break ;
-					case 7 :
-						this.setEnabled(true) ;
-						break ;
-					case 8 :
-						this.setEnabled(false) ;
-						break ;
-				}
-				break ;
-			case Location.TERMINEE :
-				switch(column){
-					case 6 :
-						this.setEnabled(false) ;
-						break ;
-					case 7 :
-						this.setEnabled(false) ;
-						break ;
-					case 8 :
-						this.setEnabled(false) ;
-						break ;
-				}
-				break ;
-		}*/
 		
 		return this ;
 	}

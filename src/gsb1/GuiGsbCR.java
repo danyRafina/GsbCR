@@ -1,10 +1,16 @@
 package gsb1;
 
+
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Container;
-import java.awt.FlowLayout;
+
+import java.awt.Menu;
+import java.awt.MenuBar;
+import java.awt.MenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
@@ -27,21 +33,23 @@ public class GuiGsbCR extends JFrame implements ActionListener {
 	private JMenuItem itemQuitter ;
 	private JMenuItem itemVisualiserVisiteur ;
 	private JMenuItem itemVisualiserPraticien ;
-	private JMenuItem itemAide ;
+	private JMenuItem itemAPropos ;
 	private JMenuItem itemDeconnexion;
 	private JMenuBar barreMenus;
 	private JMenu menuVisiteur;
 	private JMenu menuPraticien;
 	private JMenu menuCompte;
+	private JMenu menuAide;
 	
 	private VueListePraticienH vueVisualiserPraticien;
 	private VueConnexion vueConnexion ;
 	private VueListeVisiteur vueVisualiserVisiteurs ;
-	//private VueListeCR vueVisualiserCR ;
-	//private VueNouvelleLocation vueSaisirLocation ;
+	private VueListeCompteRendu vueVisualiserCR ;
+	private VueAPropos vueAPropos ;
 	
 	private CardLayout vues ;
 	private Container conteneur ;
+	
 
 	/** Construire la vue principale de l'application
 	 * 
@@ -55,7 +63,7 @@ public class GuiGsbCR extends JFrame implements ActionListener {
 		this.controleur = controleur ;
 		this.controleur.setVuePrincipales(this);
 		
-		this.setTitle("App GSBCR") ;
+		this.setTitle("Application GSB") ;
 		//this.setSize(1300,500) ; 
 		this.setSize(1120,520) ;
 		this.setLocationRelativeTo(null) ;
@@ -66,19 +74,15 @@ public class GuiGsbCR extends JFrame implements ActionListener {
 		this.conteneur.setLayout(this.vues) ;
 		
 		vueVisualiserPraticien = new VueListePraticienH(modele,controleur) ;
-		/*vueVisualiserClients = new VueListeClients(modele,controleur) ;*/
 		vueVisualiserVisiteurs = new VueListeVisiteur(modele,controleur) ;
-		/*vueSaisirClient = new VueNouveauClient(modele,controleur) ;*/
 		vueConnexion = new VueConnexion(modele,controleur) ;
+		vueVisualiserCR = new VueListeCompteRendu(modele,controleur) ;
+		vueAPropos = new VueAPropos(controleur) ;
 		
 		this.conteneur.add(vueVisualiserPraticien,"Liste praticiens hesitants") ;
 		this.conteneur.add(vueVisualiserVisiteurs,"Liste des Visiteurs") ;
+		this.conteneur.add(vueVisualiserCR,"Liste des Comptes Rendus") ;
 		this.conteneur.add(vueConnexion,"Vue Connexion") ;
-		
-		/*this.conteneur.add(vueVisualiserLocations,"Liste locations") ;
-		this.conteneur.add(vueSaisirClient,"Nouveau client") ;
-		
-		this.conteneur.add(vueSaisirLocation,"Nouvelle location") ;*/
 		
 		this.vues.show(this.conteneur,"Vue Connexion");
 		
@@ -86,6 +90,7 @@ public class GuiGsbCR extends JFrame implements ActionListener {
 		this.setVisible(true) ;
 		
 	}
+	
 	
 	/** Obtenir le contrôleur
 	 * 
@@ -141,42 +146,35 @@ public class GuiGsbCR extends JFrame implements ActionListener {
 		this.itemDeconnexion = new JMenuItem("Déconnexion") ;
 		this.itemDeconnexion.addActionListener(this);
 		menuCompte.add(this.itemDeconnexion);
-		JMenu menuAss = new JMenu("Assistance") ;
+		this.menuAide = new JMenu("Aide") ;
+		this.itemAPropos = new JMenuItem("A propos") ;
+		this.menuAide.add(this.itemAPropos) ;
+		this.itemAPropos.addActionListener(this) ;
 		this.itemVisualiserVisiteur = new JMenuItem("Liste des Visiteurs") ;
 		this.itemVisualiserVisiteur.addActionListener(this) ;
 		menuVisiteur.add(this.itemVisualiserVisiteur) ;
-		/*this.itemEnregistrerLocation = new JMenuItem("Nouvelle location") ;
-		this.itemEnregistrerLocation.addActionListener(this) ;
-		menuLocations.add(this.itemEnregistrerLocation) ;*/
-		
-		/*JMenu menuClients = new JMenu("Clients") ;*/
 		this.itemVisualiserPraticien = new JMenuItem("Liste des praticiens hésitants") ;
 		this.itemVisualiserPraticien.addActionListener(this) ;
 		menuPraticien.add(this.itemVisualiserPraticien) ;
-		/*this.itemEnregistrerClient = new JMenuItem("nouveau client") ;
-		this.itemEnregistrerClient.addActionListener(this) ;
-		menuClients.add(this.itemEnregistrerClient) ;
-		
-		JMenu menuVehicules = new JMenu("Véhicules") ;
-		this.itemVisualiserVehicules = new JMenuItem("Liste des véhicules") ;
-		this.itemVisualiserVehicules.addActionListener(this) ;
-		menuVehicules.add(this.itemVisualiserVehicules) ;*/
 		
 		menuPraticien.setEnabled(false);
 		menuVisiteur.setEnabled(false);
 		this.menuCompte.setEnabled(false);
-		//menuPraticien.setEnabled(false);
+		this.menuAide.setEnabled(false);
 		barreMenus.add(menuFichier) ;
 		barreMenus.add(menuPraticien);
 		barreMenus.add(menuVisiteur);
 		barreMenus.add(menuCompte) ;
-		barreMenus.add(menuAss) ;
-		//barreMenus.add(menuClients) ;
-		//barreMenus.add(menuVehicules) ;
+		barreMenus.add(menuAide) ;
 		
 		this.setJMenuBar(barreMenus) ;
 	}
 	
+	public JMenu getMenuAide() {
+		return menuAide;
+	}
+
+
 	public JMenu getMenuCompte() {
 		return menuCompte;
 	}
@@ -235,6 +233,14 @@ public class GuiGsbCR extends JFrame implements ActionListener {
 			this.vueVisualiserVisiteurs.actualiser() ;
 			
 		}
+		else if(nomVue.equals("Liste des Comptes Rendus")){
+			this.vueVisualiserCR.actualiser() ;
+			
+		}
+		else if(nomVue.equals("A propos")){
+			this.vueAPropos.actualiser() ;
+			
+		}
 		System.out.println("GuiRentaco::changerVue()::show name of view : "+ nomVue ) ;
 		this.vues.show(this.conteneur,nomVue) ;
 		System.out.println("GuiRentaco::changerVue()::show execute") ;
@@ -245,15 +251,17 @@ public class GuiGsbCR extends JFrame implements ActionListener {
 			this.getMenuPraticien().setEnabled(true);
 			this.getMenuVisiteur().setEnabled(true);
 			this.getMenuCompte().setEnabled(true);
+			this.getMenuAide().setEnabled(true);
 		}
 		else {
 			this.getMenuPraticien().setEnabled(false);
 			this.getMenuVisiteur().setEnabled(false);
 			this.getMenuCompte().setEnabled(false);
+			this.getMenuAide().setEnabled(false);
 		}
 	}
 	
-	public void showMessage(String error){
+	public static void showMessage(String error){
 		JOptionPane.showMessageDialog(null,error);
 	}
 
@@ -267,20 +275,26 @@ public class GuiGsbCR extends JFrame implements ActionListener {
 		System.out.println("::actionPerformed()") ;
 		Object sourceEvt = evenement.getSource() ;
 		
-		if(sourceEvt == this.itemQuitter){
+		if(sourceEvt == this.itemQuitter ){
 			try {
-				this.controleur.deconnexion();
+				int iSelected = JOptionPane.showConfirmDialog(null,"Voulez-vous vraiment quitter l'application ?", "Quitter ", JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE);
+				if(iSelected == JOptionPane.OK_OPTION) {
+					this.controleur.deconnexion();
+					this.controleur.quitterApplication() ;
+				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				GuiGsbCR.displayError(e.getMessage());
 				e.printStackTrace();
 			}
-			this.controleur.quitterApplication() ;
 		}
 		else if(sourceEvt == this.itemDeconnexion){
 			try {
-				this.controleur.deconnexion() ;
+				int iSelected = JOptionPane.showConfirmDialog(null,"Voulez-vous vraiment vous déconnecter ?", "Déconnexion", JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE);
+				if(iSelected == JOptionPane.OK_OPTION) {
+					JOptionPane.showMessageDialog(null,"Vous êtes dorénavent déconnecté", "Déconnexion réussie",JOptionPane.INFORMATION_MESSAGE);
+					this.controleur.deconnexion() ;
+				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -290,11 +304,18 @@ public class GuiGsbCR extends JFrame implements ActionListener {
 		else if(sourceEvt == this.itemVisualiserVisiteur){
 			this.controleur.visualiserVisit() ;
 		}
+		else if(sourceEvt == this.itemAPropos){
+			this.controleur.visualiserAPropos() ;
+		}
+		
 		/*else if(sourceEvt == this.itemVisualiserVehicules){
 			this.controleur.visualiserVehicules() ;
 		}*/
 		
 	}
-
 	
+	public static void displayError(String e){
+		JOptionPane.showMessageDialog(null,"Une erreur à été détetée \n"+ e,"Message d'erreur", JOptionPane.ERROR_MESSAGE, null);
+	}
 }
+	

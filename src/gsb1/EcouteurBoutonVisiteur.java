@@ -4,14 +4,19 @@ import javax.swing.table.AbstractTableModel ;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.sql.SQLException;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import com.toedter.calendar.JMonthChooser;
+import com.toedter.calendar.JYearChooser;
 
 /** Ecouteur des boutons du tableau des locations
  * 
  * @author xilim
+ * @param <JMonthChooser>
  *
  */
 public class EcouteurBoutonVisiteur implements ActionListener {
@@ -53,57 +58,43 @@ public class EcouteurBoutonVisiteur implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		System.out.println("EcouteurBoutonVisiteur::actionPerformed()") ;
 		Controleur controleur = ((ModeleListeVisiteur)this.table.getModel()).getControleur() ;
-		String iColMatricule = ((ModeleListeVisiteur)this.table.getModel()).getMatriculeCollaborateur(this.row) ;
-		
+		ModeleCompteRendu modele = ((ModeleListeVisiteur) this.table.getModel()).getModele() ;
+		String sColMatricule = ((ModeleListeVisiteur)this.table.getModel()).getMatriculeCollaborateur(this.row) ;
+		String sColNom = ((ModeleListeVisiteur)this.table.getModel()).getNomCollaborateur(this.row) ;
+		String sColPrenom = ((ModeleListeVisiteur)this.table.getModel()).getPrenomCollaborateur(this.row) ;
 		switch(this.column){
 			case 6 :
 				System.out.println("----------------------------------------") ;
-				System.out.println("[Afficher ]") ;
-				JOptionPane.showInputDialog(null,"Saisir la valeur du compteur kilométrique :","Compteur kilométrique",JOptionPane.QUESTION_MESSAGE) ;
-				//JOptionPane.p
-				//controleur.enregistrerDepart(numeroLocation) ;
-				break ;
-			/*case 7 :
-				System.out.println("----------------------------------------") ;
-				System.out.println("[Enregistrer le retour]") ;
-				String saisieKm ;
-				int nbKm = -1 ;
-				boolean finSaisie = false ;
-				do {
-					saisieKm = JOptionPane.showInputDialog(null,"Saisir la valeur du compteur kilométrique :","Compteur kilométrique",JOptionPane.QUESTION_MESSAGE) ;
-					if(saisieKm != null){
-						try {
-							nbKm = Integer.parseInt(saisieKm) ;
-							if(nbKm < 0){
-								JOptionPane.showMessageDialog(null,"La valeur saisie n'est pas correcte.","Compteur kilométrique",JOptionPane.ERROR_MESSAGE) ;
-							}
-							else {
-								//Vehicule vehicule = ((ModeleListeVisiteur)this.table.getModel()).getVehicule(this.row) ;
-								//if(nbKm < vehicule.getCompteur()){
-									JOptionPane.showMessageDialog(null,"La valeur saisie n'est pas correcte.","Compteur kilométrique",JOptionPane.ERROR_MESSAGE) ;
-								//}
-								//else {
-									finSaisie = true ;
-								///}
-							}
+				System.out.println("[Choix mois et année ]") ;
+				JMonthChooser mcMonth = new JMonthChooser();
+				JYearChooser ycYear = new JYearChooser();
+				JLabel lbMois = new JLabel("Mois");
+				JLabel lbAnnee = new JLabel("Année");
+				lbMois.setLabelFor(mcMonth);
+				lbAnnee.setLabelFor(ycYear);
+				String sMsgHeader = "Choisir le mois et l'année ( Visiteur : "+sColNom + " "+ sColPrenom+" )";
+				Object[] content = {sMsgHeader,lbMois,mcMonth,lbAnnee,ycYear};
+				int iResultJP = JOptionPane.showOptionDialog(null,content, "Choix",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+				null, null, null);
+				if (iResultJP == JOptionPane.YES_OPTION){
+					try {
+						System.out.println("YEAR "+ycYear.getYear()+" "+ mcMonth.getMonth());
+						mcMonth.setMonth(mcMonth.getMonth() + 1);
+						boolean success = modele.getCR(ycYear.getYear(),mcMonth.getMonth(),sColMatricule);
+						if(success == true){
+							JOptionPane.showMessageDialog(null,"Désolé, mais il n'y a pas de contre-rendu rédigé à cette date . Merci de réesayer ","Erreur",JOptionPane.WARNING_MESSAGE);
 						}
-						catch(NumberFormatException exception){
-							JOptionPane.showMessageDialog(null,"La valeur saisie n'est pas correcte.","Compteur kilométrique",JOptionPane.ERROR_MESSAGE) ;
+						else {
+							controleur.visualiserCR();
 						}
+					} catch (NumberFormatException | SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
-					else {
-						finSaisie = true ;
-					}
-				} while(! finSaisie) ;
-				if(saisieKm != null && nbKm != -1){
-					//controleur.enregistrerRetour(numeroLocation,nbKm) ;
 				}
+				
 				break ;
-			case 8 :
-				System.out.println("----------------------------------------") ;
-				System.out.println("[Annuler la location]") ;
-				//controleur.annulerLocation(numeroLocation) ;
-				break ;*/
 		}
 	}
 

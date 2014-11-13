@@ -2,6 +2,8 @@ package gsb1;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Month;
+import java.time.Year;
 import java.util.* ;
 
 /** Modèle de l'application
@@ -14,6 +16,7 @@ public class ModeleCompteRendu {
 	private List<Collaborateur> visiteur = new ArrayList<Collaborateur>() ;
 	private List<Collaborateur> delegue = new ArrayList<Collaborateur>() ;
 	private List<Praticien> praticien = new ArrayList<Praticien>() ;
+	private List<CompteRendu> compteRendus = new ArrayList<CompteRendu>();
 	private ResultSet result = null;
 	//private HashMap<int,String> collaborateur = new HashMap<Collaborateur>() ;
 	
@@ -45,50 +48,10 @@ public class ModeleCompteRendu {
 		this.result= Queries.queryPraticienH();
 		while (result.next()) {
 		   System.out.println("PASSAGE WHILE 2");
-			this.praticien.add(new Praticien(result.getInt("PRA_NUM"),result.getString("PRA_NOM"), result.getString("PRA_PRENOM"), result.getString("PRA_ADRESSE"), result.getInt("PRA_CP"),result.getString("PRA_VILLE"),result.getFloat("PRA_COEFNOTORIETE")));
+			this.praticien.add(new Praticien(result.getInt("PRA_NUM"),result.getString("PRA_NOM"), result.getString("PRA_PRENOM"), result.getString("PRA_ADRESSE"), result.getInt("PRA_CP"),result.getString("PRA_VILLE"),result.getFloat("PRA_COEFNOTORIETE"),result.getInt("PRA_CP")));
 		}
 		
-	}
 		
-		//System.out.println("ModeleLocations::init()") ;
-		/*this.vehicules.add(new Vehicule("AA-111-AA","Citroën C1",2014,1000)) ;
-		this.vehicules.add(new Vehicule("BB-222-BB","Citroën C2",2011,22000)) ;
-		this.vehicules.add(new Vehicule("CC-333-CC","Citroën C3",2012,3000)) ;
-		this.vehicules.add(new Vehicule("DD-444-DD","Citroën C4",2012,40000)) ;
-		this.vehicules.add(new Vehicule("EE-555-EE","Citroën C5",2011,100000)) ;
-		this.vehicules.add(new Vehicule("FF-666-FF","Citroën C2",2013,52000)) ;
-		this.vehicules.add(new Vehicule("GG-777-GG","Citroën C3",2013,48020)) ;
-		this.vehicules.add(new Vehicule("HH-888-HH","Citroën C4",2013,59230)) ;
-		this.vehicules.add(new Vehicule("II-999-II","Citroën C2",2012,70323)) ;
-		this.vehicules.add(new Vehicule("JJ-010-JJ","Citroën C4",2011,55827)) ;
-		this.vehicules.add(new Vehicule("KK-020-KK","Citroën C5",2014,1200)) ;
-		
-		this.clients.add(new Client(1,"GENPRI","Erwan","0682492032")) ;
-		this.clients.add(new Client(2,"KERREH","Armèle","0638678858")) ;
-		this.clients.add(new Client(3,"TEFFON","Christophe","0627032673")) ;
-		this.clients.add(new Client(5,"ARAUZO","Julien","0639607542")) ;
-		this.clients.add(new Client(6,"MILLET","Antoine","0619264309")) ;
-		this.clients.add(new Client(7,"KIENTZEL","Louis","0729443875")) ;
-		this.clients.add(new Client(8,"BELHADJ","Taslim","0640908628")) ;
-		this.clients.add(new Client(9,"BELLAICHE","Mikaël","0631784099")) ;
-		this.clients.add(new Client(10,"BRIATTE","Guillaume","0628365347")) ;
-		this.clients.add(new Client(11,"COESNOM","Florian","0696784358")) ;
-		this.clients.add(new Client(12,"HURON","Kévin","0721011728")) ;
-		this.clients.add(new Client(13,"JACQUIER","Nicolas","0606293623")) ;
-		this.clients.add(new Client(14,"N'DIAYE","Mamadou","0630879007")) ;
-		this.clients.add(new Client(15,"POIRIER","Nicolas","0657398079")) ;
-		this.clients.add(new Client(16,"RAFINA","Dany","0638586890")) ;
-		this.clients.add(new Client(17,"ROSCO","Steve","0620184981")) ;
-		this.clients.add(new Client(18,"UZAN","Alexis","0667838291")) ;
-		this.clients.add(new Client(19,"WELLE","Guillaume","0659023320")) ;
-		
-		this.ajouterLocation("AA-111-AA",3,new GregorianCalendar(2014,6,1)) ;
-		this.ajouterLocation("BB-222-BB",5,new GregorianCalendar(2014,6,5)) ;
-		this.ajouterLocation("DD-444-DD",1,new GregorianCalendar(2014,6,2)) ;
-		this.ajouterLocation("HH-888-HH",10,new GregorianCalendar(2014,6,3)) ;
-		this.ajouterLocation("KK-020-KK",4,new GregorianCalendar(2014,6,2)) ;
-		this.ajouterLocation("EE-555-EE",9,new GregorianCalendar(2014,6,3)) ;
-		this.ajouterLocation("CC-333-CC",15,new GregorianCalendar(2014,6,2)) ;
 	}
 	
 	/** Obtenir la liste des locations
@@ -348,26 +311,42 @@ public class ModeleCompteRendu {
 		}
 	}**/
 	
-	/** Enregistrer le retour d'un véhicule
-	 * 
-	 * @param numeroLocation Le numéro de la location
-	 * @param nombreKm Le nombre de kilomètres au compteur
-	 * @return true si l'enregistrement s'est déroulé avec succès et false dans le cas contraire
-	 */
-	/*public boolean enregistrerRetourVehicule(int numeroLocation, int nombreKm){
-		System.out.println("ModeleLocations::enregistrerRetourVehicule()") ;
-		Location location = rechercherLocation(numeroLocation) ;
-		if(location != null){
-			location.setEtat(Location.TERMINEE) ;
-			location.setDateRetour(new GregorianCalendar()) ;
-			location.getVehicule().setSituation(Vehicule.DISPONIBLE) ;
-			location.getVehicule().setCompteur(nombreKm) ;
-			return true ;
+	public String getEquivalent(Byte number){
+		String word = null;
+		if (number== 1){
+			word = "LU";
 		}
 		else {
-			return false ;
+			word="NON LU";
 		}
-	}*/
+		return word;
+	}
+	
+	public List<CompteRendu> getCompteRendus() {
+		return compteRendus;
+	}
+	
+	public Collaborateur rechercherCollabo(String sColMatricule){
+		Collaborateur collaborateur = null;
+		for(Collaborateur unCollabo : visiteur){
+			if(sColMatricule == unCollabo.getsColMatricule()){
+				collaborateur = unCollabo;
+			}
+		}
+		return collaborateur;
+	}
+	
+	
+	public Praticien rechercherPraticien(int iPraNum){
+		Praticien pratic = null;
+		for(Praticien unPraticien : praticien){
+			if(iPraNum == unPraticien.getPraNum()){
+				pratic = unPraticien;
+			}
+		}
+		return pratic;
+	}
+	
 	public boolean seConnecter() {
 		System.out.println("ModeleCompteRendu::seConnecter()") ;
 		return true;
@@ -406,6 +385,24 @@ public class ModeleCompteRendu {
 		
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public boolean getCR(int year,int month,String colMatricule) throws SQLException{
+		boolean bSuccess = false;
+		this.compteRendus.clear();
+		this.result= Queries.queryCompteRendu(colMatricule,year,month);
+		while (this.result.next()) {
+		   System.out.println("PASSAGE WHILE 3");
+		   Collaborateur collabo = rechercherCollabo(result.getString("COL_MATRICULE"));
+		  Praticien pra = rechercherPraticien(result.getInt("PRA_NUM"));
+		   
+			this.compteRendus.add(new CompteRendu(collabo,result.getInt("RAP_NUM"), pra, result.getDate("RAP_DATE"),result.getDate("DATE_VISITE"),result.getString("RAP_BILAN"),result.getString("MOT_LABEL"),result.getInt("COEF_CONF"),getEquivalent(result.getByte("RAP_EST_LU"))));
+		}
+		if(compteRendus.size() == 0){
+			System.out.println("CR LIST SIZE "+ compteRendus.size());
+			bSuccess = true;
+		}
+		return bSuccess;
 	}
 	public List<Praticien> getPraticienH() {
 		// TODO Auto-generated method stub

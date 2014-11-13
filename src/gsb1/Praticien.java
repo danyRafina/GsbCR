@@ -8,8 +8,9 @@ public class Praticien {
 	private int praCP;
 	private String praVille;
 	private float praCoefN;
+	private int praCoefConf;
 	public Praticien(int praNum, String praNom, String praPrenom,
-			String praAdresse, int praCP, String praVille, float praCoefN) {
+			String praAdresse, int praCP, String praVille, float praCoefN,int praCoefConf) {
 		super();
 		this.praNum = praNum;
 		this.praNom = praNom;
@@ -18,6 +19,10 @@ public class Praticien {
 		this.praCP = praCP;
 		this.praVille = praVille;
 		this.praCoefN = praCoefN;
+		this.praCoefConf = praCoefConf;
+	}
+	public void setPraCoefConf(int praCoefConf) {
+		this.praCoefConf = praCoefConf;
 	}
 	public int getPraNum() {
 		return praNum;
@@ -68,7 +73,10 @@ public class Praticien {
 				+ ", praCP=" + praCP + ", praVille=" + praVille + ", praCoefN="
 				+ praCoefN + "]";
 	}
-	
+	public int getPraCoefConf() {
+		return praCoefConf;
+	}
+
 	
 
 }

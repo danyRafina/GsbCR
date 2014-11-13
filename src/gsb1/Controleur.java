@@ -1,9 +1,6 @@
 package gsb1;
 
 import java.sql.SQLException;
-import java.util.* ;
-
-import javax.swing.JOptionPane;
 
 /** Contrôleur de l'application
  * 
@@ -67,32 +64,18 @@ public class Controleur {
 		this.vuePrincipale.changerDeVue("Connexion") ;
 	}
 	
-	/** Visualiser la liste des véhicules sous une forme tabulaire
+	/** Visualiser la liste des locations sous une forme tabulaire
 	 * 
 	 */
-	public void visualiserVehicules(){
-		System.out.println("Controleur::visualiserVehicules()") ;
-		this.vuePrincipale.changerDeVue("Liste véhicules");
+	public void visualiserCR(){
+		System.out.println("Controleur::visualiserCR()") ;
+		this.vuePrincipale.changerDeVue("Liste des Comptes Rendus") ;
 	}
 	
-	
-	
-	/** Afficher le formulaire de saisie d'un nouveau client
-	 * 
-	 */
-	public void saisirNouveauClient(){
-		System.out.println("Controleur::saisirNouveauClient()") ;
-		this.vuePrincipale.changerDeVue("Nouveau client");
+	public void visualiserAPropos() {
+		this.vuePrincipale.changerDeVue("A propos") ;
+		
 	}
-	
-	/** Afficher le formulaire de saisie d'une nouvelle location
-	 * 
-	 */
-	public void saisirNouvelleLocation(){
-		System.out.println("Controleur::saisirNouvelleLocation()") ;
-		this.vuePrincipale.changerDeVue("Nouvelle location");
-	}
-	
 	
 	/** Enregistrer un nouveau client
 	 * 
@@ -100,7 +83,8 @@ public class Controleur {
 	 * @param prenom Le prénom du client
 	 * @param mobile Le numéro de mobile du client
 	 */
-	public void seConnecter(String login, String mdp){
+	public boolean seConnecter(String login, String mdp){
+		boolean bSuccess = true;
 		System.out.println("Controleur::seConnecter()") ;
 		boolean coOK = this.modele.seConnecter(login,mdp) ;
 		if (coOK == true ){
@@ -109,88 +93,19 @@ public class Controleur {
 			System.out.println("Controleur::seConnecter()::mdp et id vrai") ;
 		}
 		else {
-			this.vuePrincipale.showMessage("Erreur : Veuillez vérifer l'identifiant ou le mot de passe saisie ");
+			bSuccess = false;
 			System.out.println("Controleur::seConnecter()::mdp ou id faux") ;
 		}
+		return bSuccess;
 	}
 	
 	public void deconnexion() throws SQLException{
 		System.out.println("Controleur::deconnexion()") ;
 		 Singleton.destroyInstance();
-			this.vuePrincipale.changeStateMenu(0);
-			this.vuePrincipale.changerDeVue("Vue Connexion") ;
+		this.vuePrincipale.changeStateMenu(0);
+		this.vuePrincipale.changerDeVue("Vue Connexion") ;
 	}
 	
-	/** Enregistrer un nouveau client
-	 * 
-	 * @param nom Le nom du client
-	 * @param prenom Le prénom du client
-	 * @param mobile Le numéro de mobile du client
-	 */
-	/*public void enregistrerClient(String nom, String prenom, String mobile){
-		System.out.println("Controleur::enregistrerClient()") ;
-		this.modele.ajouterClient(nom,prenom,mobile) ;
-		this.vuePrincipale.changerDeVue("Liste clients") ;
-	}
-	
-	/** Annuler l'enregistrement d'un nouveau client
-	 * 
-	 */
-	/*public void annulerEnregistrerClient(){
-		System.out.println("Controleur::annulerEnregistrerClient()") ;
-		this.vuePrincipale.changerDeVue("Liste clients") ;
-	}
-	
-	/** Enregistrer une nouvelle location
-	 * 
-	 * @param immVehicule Le numéro d'immatriculation du véhicule réservé
-	 * @param numClient Le numéro du client
-	 * @param dateDepart La date de début de location
-	 */
-	/*public void enregistrerLocation(String immVehicule,int numClient,GregorianCalendar dateDepart){
-		System.out.println("Controleur::enregistrerLocation()") ;
-		this.modele.ajouterLocation(immVehicule,numClient,dateDepart) ;
-		this.vuePrincipale.changerDeVue("Liste locations") ;
-	}
-	
-	/** Annuler l'enregistrement d'une nouvelle location
-	 * 
-	 */
-	/*public void annulerEnregistrerLocation(){
-		System.out.println("Controleur::annulerEnregistrerLocation()") ;
-		this.vuePrincipale.changerDeVue("Liste locations") ;
-	}
-	
-	/** Enregistrer le départ d'un véhicule
-	 * Début de la location
-	 * @param numeroLocation Le numéro de la location
-	 */
-	/*public void enregistrerDepart(int numeroLocation){
-		System.out.println("Controleur::enregistrerDepart()") ;
-		this.modele.enregistrerDepartVehicule(numeroLocation) ;
-		this.vuePrincipale.changerDeVue("Liste locations") ;
-	}
-	
-	/** Enregistrer le retour d'un véhicule
-	 * Fin d'une location
-	 * @param numeroLocation Le numéro de la location
-	 * @param nbKm Le nombre de km relevé
-	 */
-	/*public void enregistrerRetour(int numeroLocation, int nbKm){
-		System.out.println("Controleur::enregistrerRetour()") ;
-		this.modele.enregistrerRetourVehicule(numeroLocation,nbKm) ;
-		this.vuePrincipale.changerDeVue("Liste locations") ;
-	}
-	
-	/** Annuler une location
-	 * Suppression de la location
-	 * @param numeroLocation Le numéro de la location
-	 */
-	/*public void annulerLocation(int numeroLocation){
-		System.out.println("Controleur::annulerLocation()") ;
-		this.modele.supprimerLocation(numeroLocation) ;
-		this.vuePrincipale.changerDeVue("Liste locations") ;
-	}
 	
 	/** Quitter l'application
 	 * 
@@ -199,6 +114,7 @@ public class Controleur {
 		System.out.println("Controleur::quitterApplication()") ;
 		System.exit(0) ;
 	}
+	
 	
 	/** Visualiser les données de la couche "Logique Métier"
 	 * 
@@ -210,15 +126,16 @@ public class Controleur {
 		for(Praticien praticien : this.modele.getPraticienH()){
 			System.out.println(praticien) ;
 		}
-		System.out.println("------------------- visiteur -----------------------------") ;
+		System.out.println("------------------- Liste des Visiteurs -----------------------------") ;
 		for(Collaborateur visiteur : this.modele.getVisiteur()){
 			System.out.println(visiteur) ;
 		}
-		System.out.println("------------------ Véhicules ----------------------------") ;
-		/*for(Vehicule vehicule : this.modele.getVehicules()){
-			System.out.println(vehicule) ;
-		}*/
+		System.out.println("------------------ Liste des Comptes Rendus ----------------------------") ;
+		for(CompteRendu compteRendu : this.modele.getCompteRendus()){
+			System.out.println(compteRendu) ;
+		}
 		System.out.println("") ;
 	}
+
 	
 }

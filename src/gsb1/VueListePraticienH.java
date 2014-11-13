@@ -1,11 +1,7 @@
 package gsb1;
 
-import java.util.* ;
-import java.awt.FlowLayout;
-
 import java.awt.* ;
 import javax.swing.* ;
-import javax.swing.JTable.* ;
 
 /** Vue dédiée à l'affichage de la liste des clients
  * 
