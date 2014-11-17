@@ -1,20 +1,32 @@
 package fr.gsbcr.model;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.mysql.jdbc.PreparedStatement;
+
 import fr.gsbcr.database.Singleton;
 
+/** Classe Quieres de l'application
+ * @author rafina
+ *
+ */
 public class Queries {
 	private static String tblSQuerySelect[] = {
 		"SELECT COLLABORATEUR.COL_MATRICULE ,COL_MDP from COLLABORATEUR inner join TRAVAILLER ON COLLABORATEUR.COL_MATRICULE = TRAVAILLER.COL_MATRICULE where COLLABORATEUR.COL_MATRICULE = ? AND COL_MDP = ? AND TRA_ROLE='Délégué'",
 		"SELECT * from PRATICIEN inner join RAPPORT_VISITE on RAPPORT_VISITE.PRA_NUM= PRATICIEN.PRA_NUM where COEF_CONF < 5 ",
 		"SELECT * from RAPPORT_VISITE inner join MOTIF on RAPPORT_VISITE.RAP_MOTIF= MOTIF.MOT_NUM where COL_MATRICULE = ? and year(RAP_DATE) = ? and month (RAP_DATE) = ?",
 		"SELECT * from COLLABORATEUR inner join TRAVAILLER on COLLABORATEUR.COL_MATRICULE = TRAVAILLER.COL_MATRICULE where TRA_ROLE = 'Visiteur' ",
+		"UPDATE RAPPORT_VISITE SET RAP_EST_LU = 1 WHERE RAP_NUM = ? "
 	};
 	private static ResultSet result;
 	
+	/** Récupération d'un délégué
+	 * @param login Identifiant du délégué
+	 * @param mdp mot de passe du délégué
+	 * @return Résultat de la requête
+	 * @throws SQLException  Peut générer une exception sql
+	 */
 	public static ResultSet queryDelegue(String login,String mdp) throws SQLException{
 		PreparedStatement pstmt = Singleton.prepareStatement(tblSQuerySelect[0]);
 		pstmt.setString(1,login);
@@ -24,26 +36,56 @@ public class Queries {
 		
 	}
 	
+	/** Récupération des praticiens hésitants
+	 * @return Résultat de la requête 
+	 * @throws SQLException  Peut générer une exception sql
+	 */
 	public static ResultSet queryPraticienH() throws SQLException{
 		result = Singleton.getResult(tblSQuerySelect[1]);
 		return result;
 		
 	}
+	
+	/** Récupération des visiteurs
+	 * @return Résultat de la requête 
+	 * @throws SQLException  Peut générer une exception sql
+	 */
 	public static ResultSet queryVisiteur() throws SQLException{
 		result = Singleton.getResult(tblSQuerySelect[3]);
 		return result;
 		
 	}
-	public static ResultSet queryCompteRendu(String colMatricule,int year,int month) throws SQLException{
+	
+	/** Récupération des compte-rendus
+	 * @param sColMatricule Matricule du visiteur
+	 * @param iYear Année de rédaction du compte-rendu
+	 * @param iMonth Mois de rédaction du compte-rendu
+	 * @return Résultat de la requête 
+	 * @throws SQLException  Peut générer une exception sql
+	 */
+	public static ResultSet queryCompteRendu(String sColMatricule,int iYear,int iMonth) throws SQLException{
 		
 		PreparedStatement pstmt = (PreparedStatement) Singleton.prepareStatement(tblSQuerySelect[2]);
-		pstmt.setString(1,colMatricule);
-		pstmt.setInt(2,year);
-		pstmt.setInt(3,month);
+		pstmt.setString(1,sColMatricule);
+		pstmt.setInt(2,iYear);
+		pstmt.setInt(3,iMonth);
 		
 		ResultSet result = Singleton.getResult(pstmt);
 		
 		return result;
+	}
+	
+	/** Définir un état de lecture pour un compte-rendu
+	 * @param iRapNum Numéro du compte-rendu
+	 * @return Résultat de la requête 
+	 * @throws SQLException  Peut générer une exception sql
+	 */
+	public static ResultSet setRapLu(int iRapNum) throws SQLException{
+			
+			PreparedStatement pstmt = (PreparedStatement) Singleton.prepareStatement(tblSQuerySelect[4]);
+			pstmt.setInt(1,iRapNum);
+			ResultSet result = Singleton.getResult(pstmt);
+			return result;
 	}
 	
 

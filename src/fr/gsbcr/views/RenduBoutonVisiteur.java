@@ -6,7 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
-/** Rendu des boutons du tableau des locations
+/** Rendu des boutons du tableau des visiteurs
  * 
  * @author xilim
  *

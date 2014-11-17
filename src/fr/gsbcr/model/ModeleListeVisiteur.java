@@ -4,12 +4,12 @@ import fr.gsbcr.entities.Collaborateur;
 import javax.swing.* ;
 import javax.swing.table.* ;
 
-import fr.gsbcr.controler.Controleur;
+import fr.gsbcr.controller.Controleur;
 
 
-/** Modèle du tableau des locations
+/** Modèle du tableau des Visiteurs
  * 
- * @author xilim
+ * @author rafina
  *
  */
 public class ModeleListeVisiteur extends AbstractTableModel {
@@ -25,7 +25,7 @@ public class ModeleListeVisiteur extends AbstractTableModel {
 	private ModeleCompteRendu modele ;
 	private Controleur controleur ;
 	
-	/** Créer le modèle de la liste des locations
+	/** Créer le modèle de la liste des visiteurs
 	 * 
 	 * @param modele Le modèle de l'application
 	 * @param controleur Le contrôleur de l'application
@@ -38,6 +38,9 @@ public class ModeleListeVisiteur extends AbstractTableModel {
 		visiteur = modele.getVisiteur() ;
 	}
 	
+	/** Obtenir le modèle de l'application
+	 * @param modele Modèle de l'application
+	 */
 	public void setModele(ModeleCompteRendu modele) {
 		this.modele = modele;
 	}
@@ -60,33 +63,33 @@ public class ModeleListeVisiteur extends AbstractTableModel {
 		return this.modele ;
 	}
 	
-	/** Obtenir le numéro de la location
+	/** Obtenir le matricule du visiteur
 	 * 
 	 * @param indiceLigne L'indice de la ligne
-	 * @return Le numéro de de la location
+	 * @return Le matricule du visiteur
 	 */
 	public String getMatriculeCollaborateur(int indiceLigne){
-		//System.out.println("ModeleListeLocations::getNumeroLocation()") ;
 		return visiteur.get(indiceLigne).getsColMatricule() ;
 	}
+	
+	/** Obtenir le nom du visiteur
+	 * 
+	 * @param indiceLigne L'indice de la ligne
+	 * @return Le nom du visiteur
+	 */
 	public String getNomCollaborateur(int indiceLigne){
 		//System.out.println("ModeleListeLocations::getNumeroLocation()") ;
 		return visiteur.get(indiceLigne).getsColNom() ;
 	}
 	
+	/** Obtenir le prénom du visiteur
+	 * 
+	 * @param indiceLigne L'indice de la ligne
+	 * @return Le prénom du visiteur
+	 */
 	public String getPrenomCollaborateur(int indiceLigne){
 		//System.out.println("ModeleListeLocations::getNumeroLocation()") ;
 		return visiteur.get(indiceLigne).getsColPrenom() ;
-	}
-	
-	/** Obtenir le véhicule
-	 * 
-	 * @param indiceLigne L'indice de la ligne
-	 * @return Le véhicule
-	 */
-	/*public Collaborateur getNomVis(int indiceLigne){
-		//System.out.println("ModeleListeLocations::getVehicule()") ;
-		return visiteur.get(indiceLigne).getsColNom() ;
 	}
 	
 	/** Obtenir le nombre de lignes

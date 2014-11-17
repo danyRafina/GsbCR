@@ -17,9 +17,15 @@ import javax.swing.JPasswordField;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 
-import fr.gsbcr.controler.Controleur;
+import fr.gsbcr.controller.Controleur;
 import fr.gsbcr.model.ModeleCompteRendu;
 
+
+/** Vue dédiée à l'affichage à la connexion
+ * 
+ * @author rafina
+ *
+ */
 public class VueConnexion extends JPanel implements ActionListener {
 	/**
 	 * 
@@ -37,6 +43,12 @@ public class VueConnexion extends JPanel implements ActionListener {
 	private JButton bSeConnecter = new JButton("Se Connecter");
 	private JPanel panel = new JPanel();
 	private GridLayout layout = new GridLayout(3,1);
+	
+	/** Création de la vue
+	 * 
+	 * @param modele Modèle de l'application
+	 * @param controleur Controleur de l'application
+	 */
 	public VueConnexion(ModeleCompteRendu modele, Controleur controleur){
 		super();
 		System.out.println("VueConnexion::VueConnexion()") ;
@@ -47,33 +59,18 @@ public class VueConnexion extends JPanel implements ActionListener {
 		this.lbUserId.setLabelFor(tfUserId);
 		this.lbUserPass.setLabelFor(pfUserPass);
 		this.bSeConnecter.addActionListener(this);
-		//this.bCancel.addActionListener(this);
-		
-		/*this.boxUserId.add(lbUserId);
-		this.boxUserId.add(this.tfUserId);
-		this.boxUserPass.add(lbUserPass);
-		this.boxUserPass.add(this.pfUserPass);
-		this.boxBouttons.add(this.bValidate);
-		this.boxBouttons.add(this.bCancel);*/
-		//this.boxPrincipal.add(boxUserId);
-		//this.boxPrincipal.add(boxUserPass);
-		//this.boxPrincipal.add(boxBouttons);*/
 		this.lbText.setForeground(Color.BLUE);
 		this.lbText2.setForeground(Color.BLUE);
 		panel.add(lbText);
 		panel.add(lbText2);
 		panel.add(bSeConnecter);
-	
-		
 		this.add(this.panel);
-	
-		System.out.println("VueConnexion::add all on pricipal box") ;
 		
 	}
 
 	/** Gérer les actions de l'utilisateur
 	 * 
-	 * @param evenement L'action de l'utilisateur
+	 * @param event L'action de l'utilisateur
 	 */
 
 	@SuppressWarnings("deprecation")
@@ -101,8 +98,7 @@ public class VueConnexion extends JPanel implements ActionListener {
 		}
 		
 	}
-	/** 
-	 * 
+	/**  Actualiser les champs 
 	 */
 	public void actualiser(){
 		System.out.println("VueConnexion::actualiser()") ;

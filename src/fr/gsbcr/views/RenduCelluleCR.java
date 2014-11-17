@@ -7,9 +7,9 @@ import javax.swing.* ;
 
 import fr.gsbcr.model.ModeleListeCR;
 
-/** Rendu des cellules du tableau des locations
+/** Rendu des cellules du tableau des comptes-rendus
  * 
- * @author xilim
+ * @author rafina
  *
  */
 public class RenduCelluleCR extends DefaultTableCellRenderer {

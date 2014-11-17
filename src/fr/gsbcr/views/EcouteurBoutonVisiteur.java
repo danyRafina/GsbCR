@@ -15,14 +15,13 @@ import javax.swing.JTextField;
 import com.toedter.calendar.JMonthChooser;
 import com.toedter.calendar.JYearChooser;
 
-import fr.gsbcr.controler.Controleur;
+import fr.gsbcr.controller.Controleur;
 import fr.gsbcr.model.ModeleCompteRendu;
 import fr.gsbcr.model.ModeleListeVisiteur;
 
-/** Ecouteur des boutons du tableau des locations
+/** Ecouteur des boutons du tableau des visiteurs
  * 
- * @author xilim
- * @param <JMonthChooser>
+ * @author rafina
  *
  */
 public class EcouteurBoutonVisiteur implements ActionListener {

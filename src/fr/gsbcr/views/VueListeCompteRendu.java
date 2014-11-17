@@ -9,17 +9,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import fr.gsbcr.controler.Controleur;
+import fr.gsbcr.controller.Controleur;
 import fr.gsbcr.model.ModeleCompteRendu;
 import fr.gsbcr.model.ModeleListeCR;
 
+
+/** Vue dédiée à l'affichage de la liste des comptes-rendus
+ * 
+ * @author rafina
+ *
+ */
 public class VueListeCompteRendu extends JPanel{
 
-	/** Vue dédiée à l'affichage de la liste des clients
-	 * 
-	 * @author xilim
-	 *
-	 */
 		private static final long serialVersionUID = 1L;
 		private Controleur controleur ;
 		private ModeleCompteRendu modele ;
@@ -27,7 +28,7 @@ public class VueListeCompteRendu extends JPanel{
 		private ModeleListeCR modeleTableauCR ;
 		private JTable tableauCR ;
 		
-		/** Créer la vue dédiée à l'affichage de la liste des clients
+		/** Créer la vue dédiée à l'affichage de la liste des comptes-rendus
 		 * 
 		 * @param modele Le modèle
 		 * @param controleur Le contrôleur
@@ -72,7 +73,9 @@ public class VueListeCompteRendu extends JPanel{
 			tableauCR.setModel(modeleTableauCR) ;
 			this.appliquerRendu();
 		}
-		
+		/** Application d'un rendu sur les cellules
+		 * 
+		 */
 		private void appliquerRendu(){
 			System.out.println("VueListeCR::appliquerRendu()") ;
 			this.tableauCR.getColumn("Nom praticien").setCellRenderer(new RenduCelluleCR()) ;

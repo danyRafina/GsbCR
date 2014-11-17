@@ -17,12 +17,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import fr.gsbcr.controler.Controleur;
+import fr.gsbcr.controller.Controleur;
 import fr.gsbcr.model.ModeleCompteRendu;
 
 /** Vue principale 
  * 
- * @author xilim
+ * @author rafina
  *
  */
 public class GuiGsbCR extends JFrame implements ActionListener {
@@ -84,6 +84,7 @@ public class GuiGsbCR extends JFrame implements ActionListener {
 		this.conteneur.add(vueVisualiserVisiteurs,"Liste des Visiteurs") ;
 		this.conteneur.add(vueVisualiserCR,"Liste des Comptes Rendus") ;
 		this.conteneur.add(vueConnexion,"Vue Connexion") ;
+		this.conteneur.add(vueAPropos,"A propos") ;
 		
 		this.vues.show(this.conteneur,"Vue Connexion");
 		
@@ -247,6 +248,9 @@ public class GuiGsbCR extends JFrame implements ActionListener {
 		System.out.println("GuiRentaco::changerVue()::show execute") ;
 	}
 	
+	/** Changer l'état des menus
+	 * @param num Numéro de changement du menu
+	 */
 	public void changeStateMenu(int num){
 		if( num == 1) {
 			this.getMenuPraticien().setEnabled(true);
@@ -261,6 +265,10 @@ public class GuiGsbCR extends JFrame implements ActionListener {
 			this.getMenuAide().setEnabled(false);
 		}
 	}
+	
+	/** Affichage d'une erreur
+	 * @param error Message contenant l'erreur
+	 */
 	
 	public static void showMessage(String error){
 		JOptionPane.showMessageDialog(null,error);
@@ -309,12 +317,11 @@ public class GuiGsbCR extends JFrame implements ActionListener {
 			this.controleur.visualiserAPropos() ;
 		}
 		
-		/*else if(sourceEvt == this.itemVisualiserVehicules){
-			this.controleur.visualiserVehicules() ;
-		}*/
-		
 	}
 	
+	/** Affichage d'une erreur
+	 * @param e Message contenant l'erreur
+	 */
 	public static void displayError(String e){
 		JOptionPane.showMessageDialog(null,"Une erreur à été détetée \n"+ e,"Message d'erreur", JOptionPane.ERROR_MESSAGE, null);
 	}

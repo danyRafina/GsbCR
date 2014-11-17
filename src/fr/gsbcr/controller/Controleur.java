@@ -1,4 +1,4 @@
-package fr.gsbcr.controler;
+package fr.gsbcr.controller;
 import fr.gsbcr.database.Singleton;
 import fr.gsbcr.entities.*;
 import fr.gsbcr.model.ModeleCompteRendu;
@@ -7,9 +7,7 @@ import fr.gsbcr.views.GuiGsbCR;
 import java.sql.SQLException;
 
 /** Contrôleur de l'application
- * 
- * @author gsb
- *
+ * @author rafina
  */
 public class Controleur {
 
@@ -44,54 +42,52 @@ public class Controleur {
 		this.vuePrincipale = vuePrincipale ;
 	}
 	
-	/** Visualiser la liste praticien hésitant sous une forme tabulaire
-	 * 
+	/** Visualiser la liste  des praticiens hésitants sous une forme tabulaire
 	 */
 	public void visualiserPraticienH(){
 		System.out.println("Controleur::visualiserPraticienH()") ;
 		this.vuePrincipale.changerDeVue("Liste praticiens hesitants");                                                                                                                                                        
 	}
 	
-	/** Visualiser la liste des locations sous une forme tabulaire
-	 * 
+	/** Visualiser la liste des visiteurs sous une forme tabulaire
 	 */
 	public void visualiserVisit(){
 		System.out.println("Controleur::visualiserVisit()") ;
 		this.vuePrincipale.changerDeVue("Liste des Visiteurs") ;
+		this.visualiserModele();
 	}
 	
-	/** Visualiser la liste des locations sous une forme tabulaire
-	 * 
+	/** Visualiser la fenêtre de connexion 
 	 */
 	public void visualiserConnexion(){
 		System.out.println("Controleur::visualiserConnexion()") ;
 		this.vuePrincipale.changerDeVue("Connexion") ;
 	}
 	
-	/** Visualiser la liste des locations sous une forme tabulaire
-	 * 
+	/** Visualiser la liste des comptes rendus sous une forme tabulaire
 	 */
 	public void visualiserCR(){
 		System.out.println("Controleur::visualiserCR()") ;
 		this.vuePrincipale.changerDeVue("Liste des Comptes Rendus") ;
 	}
-	
+	/** Visualiser les informations sur l'application
+	 */
 	public void visualiserAPropos() {
 		this.vuePrincipale.changerDeVue("A propos") ;
 		
 	}
 	
-	/** Enregistrer un nouveau client
+	/** Connecter un délégué
 	 * 
-	 * @param nom Le nom du client
-	 * @param prenom Le prénom du client
-	 * @param mobile Le numéro de mobile du client
-	 * @throws SQLException 
+	 * @param sLogin L'identifiant du délégué
+	 * @param sPasswd Le mot de passe du délégué
+	 * @throws SQLException Peut générer une exception sql
+	 * @return Vrai si il existe un délégué avec cet indentifiant et mot de passe
 	 */
-	public boolean seConnecter(String login, String mdp) throws SQLException{
+	public boolean seConnecter(String sLogin, String sPasswd ) throws SQLException{
 		boolean bSuccess = true;
 		System.out.println("Controleur::seConnecter()") ;
-		boolean coOK = this.modele.seConnecter(login,mdp) ;
+		boolean coOK = this.modele.seConnecter(sLogin,sPasswd) ;
 		if (coOK == true ){
 			this.vuePrincipale.changeStateMenu(1);
 			this.vuePrincipale.changerDeVue("Liste praticiens hesitants") ;
@@ -104,16 +100,18 @@ public class Controleur {
 		return bSuccess;
 	}
 	
+	/** Déconnecter l'utilisateur courant
+	 * @throws SQLException  Peut générer une exception sql
+	 */
 	public void deconnexion() throws SQLException{
 		System.out.println("Controleur::deconnexion()") ;
-		 Singleton.destroyInstance();
+		Singleton.destroyInstance();
 		this.vuePrincipale.changeStateMenu(0);
 		this.vuePrincipale.changerDeVue("Vue Connexion") ;
 	}
 	
 	
 	/** Quitter l'application
-	 * 
 	 */
 	public void quitterApplication(){
 		System.out.println("Controleur::quitterApplication()") ;
@@ -139,7 +137,6 @@ public class Controleur {
 		for(CompteRendu compteRendu : this.modele.getCompteRendus()){
 			System.out.println(compteRendu) ;
 		}
-		System.out.println("") ;
 	}
 
 	

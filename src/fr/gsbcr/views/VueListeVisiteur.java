@@ -9,10 +9,16 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import fr.gsbcr.controler.Controleur;
+import fr.gsbcr.controller.Controleur;
 import fr.gsbcr.model.ModeleCompteRendu;
 import fr.gsbcr.model.ModeleListeVisiteur;
 
+
+
+/** Vue consacré à la liste des visiteurs
+ * @author rafina
+ *
+ */
 public class VueListeVisiteur extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
@@ -22,6 +28,11 @@ public class VueListeVisiteur extends JPanel {
 	private ModeleListeVisiteur modeleTableauVisiteur ;
 	private JTable tableauVisiteur ;
 	
+	/** Création de la vue
+	 * 
+	 * @param modele Modèle de l'application
+	 * @param controleur Contrôleur de l'application
+	 */
 	public VueListeVisiteur(ModeleCompteRendu modele, Controleur controleur) {
 		super();
 		System.out.println("VueListeVisiteur::VueListeVisiteur()") ;
@@ -34,7 +45,6 @@ public class VueListeVisiteur extends JPanel {
 				
 		boxEtiquette.add(new JLabel("Visiteurs :")) ;
 		boxEtiquette.add(Box.createHorizontalGlue()) ;
-	
 		modeleTableauVisiteur= new ModeleListeVisiteur(modele,controleur) ;
 		tableauVisiteur= new JTable(modeleTableauVisiteur) ;
 		tableauVisiteur.setRowHeight(30) ;
@@ -53,7 +63,10 @@ public class VueListeVisiteur extends JPanel {
 		this.add(boxPrincipal) ;
 		System.out.println("VueListeVisiteur::Fin constructeur()") ;
 	}
-
+	
+	/** Actualiser le modèle du tableau
+	 * 
+	 */
 
 	public void actualiser(){
 		System.out.println("VueListeVisiteur::actualiser()") ;
@@ -63,18 +76,11 @@ public class VueListeVisiteur extends JPanel {
 		System.out.println("VueListeVisiteur::actualiser() END") ;
 		this.appliquerRendu();
 	}
-	
+	/** Application d'un rendu sur les cellules
+	 * 
+	 */ 
 	private void appliquerRendu(){
 		System.out.println("VueListeVisiteur::appliquerRendu()") ;
-		/*this.tableauVisiteur.getColumn("Matricule").setCellRenderer(new RenduCelluleLocation()) ;
-		this.tableauVisiteur.getColumn("Enregistrement").setCellRenderer(new RenduCelluleLocation()) ;
-		this.tableauVisiteur.getColumn("Date départ").setCellRenderer(new RenduCelluleLocation()) ;
-		this.tableauVisiteur.getColumn("Date retour").setCellRenderer(new RenduCelluleLocation()) ;
-		this.tableauVisiteur.getColumn("Client").setCellRenderer(new RenduCelluleLocation()) ;
-		this.tableauVisiteur.getColumn("Véhicule").setCellRenderer(new RenduCelluleLocation()) ;
-		this.tableauVisiteur.getColumn("Départ").setCellRenderer(new RenduBoutonLocation()) ;
-		this.tableauVisiteur.getColumn("Retour").setCellRenderer(new RenduBoutonLocation()) ;
-		this.tableauVisiteur.getColumn("Annulation").setCellRenderer(new RenduBoutonLocation()) ;*/
 		
 		this.tableauVisiteur.getColumn("Bouton de sélection").setCellRenderer(new RenduBoutonVisiteur()) ;
 		this.tableauVisiteur.getColumn("Bouton de sélection").setCellEditor(new EditeurBoutonVisiteur(new JCheckBox()));

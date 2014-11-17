@@ -6,8 +6,12 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
-import fr.gsbcr.controler.Controleur;
+import fr.gsbcr.controller.Controleur;
 
+/** Modèle de la liste des comptes-rendus
+ * @author rafina
+ *
+ */
 public class ModeleListeCR extends AbstractTableModel  {
 	
 	/**
@@ -19,9 +23,10 @@ public class ModeleListeCR extends AbstractTableModel  {
 	private ModeleCompteRendu modele ;
 	private Controleur controleur;
 	
-	/** Créer le modèle de la liste des clients
+	/** Créer le modèle de la liste des compte-rendus
 	 * 
 	 * @param modele Le modèle de l'application
+	 * @param controleur Le controleur de l'application
 	 */
 	public ModeleListeCR(ModeleCompteRendu modele,Controleur controleur){
 		super() ; 
@@ -85,23 +90,47 @@ public class ModeleListeCR extends AbstractTableModel  {
 		}
 	}
 
+	/** Obtenir le controleur de l'application
+	 * @return controleur Le controleur de l'application
+	 */
 	public Controleur getControleur() {
 		// TODO Auto-generated method stub
 		return controleur;
 	}
+	
+	/** Obtenir le bilan du compte-rendu
+	 * 
+	 * @param indiceLigne Indice de la ligne
+	 * @return Le bilan du compte-rendu
+	 */
 
 	public String getBilan(int indiceLigne) {
 		return compteRendus.get(indiceLigne).getsBilanCR() ;
 	}
 	
+	/** Obtenir l'état de lecture du compte-rendu
+	 * 
+	 * @param indiceLigne Indice de la ligne
+	 * @return L'état de lecture du compte-rendu
+	 */
 	public String getEtat(int indiceLigne) {
 		return compteRendus.get(indiceLigne).getByEstLuCR() ;
 	}
 	
+	/** Obtenir le motif du compte-rendu
+	 * 
+	 * @param indiceLigne Indice de la ligne
+	 * @return Le motif du compte-rendu
+	 */
 	public String getMotif(int indiceLigne) {
 		return compteRendus.get(indiceLigne).getsMotifCR() ;
 	}
 	
+	/** Obtenir le numéro du compte-rendu
+	 * 
+	 * @param indiceLigne Indice de la ligne
+	 * @return Numéro du compte-rendu
+	 */
 	public int getNumRapport(int indiceLigne) {
 		return compteRendus.get(indiceLigne).getiNumCR() ;
 	}
@@ -114,7 +143,6 @@ public class ModeleListeCR extends AbstractTableModel  {
 	 */
 	@Override
 	public boolean isCellEditable(int indiceLigne, int indiceColonne){
-		//System.out.println("ModeleListeLocations::isCellEditable()") ;
 		switch(indiceColonne){
 			case 5 :
 				return true ;
@@ -122,6 +150,14 @@ public class ModeleListeCR extends AbstractTableModel  {
 				return false;
 		}
 
+	}
+
+	/** Obtenir le modèle de l'application
+	 * @return Le modèle de l'application
+	 */
+	public ModeleCompteRendu getModele() {
+		// TODO Auto-generated method stub
+		return modele;
 	}
 
 }

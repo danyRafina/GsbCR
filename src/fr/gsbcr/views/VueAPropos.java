@@ -5,13 +5,24 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import fr.gsbcr.controler.Controleur;
+import fr.gsbcr.controller.Controleur;
+
+/** Vue dédiée à l'affichage des informations de l'application
+ * 
+ * @author rafina
+ *
+ */
 
 public class VueAPropos extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Controleur controleur ;
 	private JLabel lbText = new JLabel("Application GSB 2014");
 	private JLabel lbText2 = new JLabel("Cette application est destinée aux délégués régionaux");
+	
+	/** Création de la vue 
+	 * 
+	 * @param controleur Controleur de l'application
+	 */
 	public VueAPropos(Controleur controleur){
 		super();
 		this.setControleur(controleur) ;
@@ -23,24 +34,27 @@ public class VueAPropos extends JPanel {
 		this.add(lbText2);
 		
 	}
-
-
-
-	public void actualiser() {
-		
-	}
-
-
-
+	/** Obtenir le contrôleur 
+	 * 
+	 * @return le contrôleur de l'application
+	 */
 	public Controleur getControleur() {
 		return controleur;
 	}
 
-
+	/** Modifier le contrôleur de l'application
+	 * 
+	 * @param controleur Nouveau contrôleur
+	 */
 
 	public void setControleur(Controleur controleur) {
 		this.controleur = controleur;
 	}
-
+	
+	/**  Actualiser les champs 
+	 */
+	public void actualiser(){
+		
+	}
 
 }

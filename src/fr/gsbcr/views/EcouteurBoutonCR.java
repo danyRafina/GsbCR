@@ -1,17 +1,22 @@
 package fr.gsbcr.views;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
+import fr.gsbcr.model.ModeleCompteRendu;
+import fr.gsbcr.model.ModeleException;
 import fr.gsbcr.model.ModeleListeCR;
+import fr.gsbcr.model.ModeleListeVisiteur;
 
-/** Ecouteur des boutons du tableau des locations
+/** Ecouteur des boutons du tableau des comptes-rendus
  * 
- * @author xilim
+ * @author rafina
  *
  */
 public class EcouteurBoutonCR implements ActionListener {
@@ -52,19 +57,34 @@ public class EcouteurBoutonCR implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		System.out.println("EcouteurBoutonCR::actionPerformed()") ;
+		ModeleCompteRendu modele = ((ModeleListeCR)this.table.getModel()).getModele() ;
 		String sBilan =  ((ModeleListeCR)this.table.getModel()).getBilan(this.row) ;
 		String sMotif =((ModeleListeCR)this.table.getModel()).getMotif(this.row) ;
-		int sNumRapport =((ModeleListeCR)this.table.getModel()).getNumRapport(this.row) ;
+		int iNumRapport =((ModeleListeCR)this.table.getModel()).getNumRapport(this.row) ;
+		String sRapLu =  ((ModeleListeCR)this.table.getModel()).getEtat(this.row) ;
 		
-		switch(this.column){
-			case 5 :
-				System.out.println("----------------------------------------") ;
-				System.out.println("[Afficher ]");
-				Object[] content = {"Rapport numéro : "+sNumRapport,"\n","Bilan : "+sBilan,"Motif : "+sMotif,"\n"};
-				JOptionPane.showOptionDialog(null,content, "Détails",
-				JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
-				null, null, null);
-				break ;
+		try {
+			switch(this.column){
+				case 5 :
+					System.out.println("----------------------------------------") ;
+					System.out.println("[Afficher ]");
+					if(sRapLu == "NON LU"){
+						try {
+							modele.setRapLu(iNumRapport);
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+					Object[] content = {"Rapport numéro : "+iNumRapport,"\n","Bilan : "+sBilan,"Motif : "+sMotif,"\n"};
+					JOptionPane.showOptionDialog(null,content, "Détails",
+					JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
+					null, null, null);
+					break ;
+			}
+		} catch (HeadlessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 

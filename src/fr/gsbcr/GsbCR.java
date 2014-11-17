@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
-import fr.gsbcr.controler.Controleur;
+import fr.gsbcr.controller.Controleur;
 import fr.gsbcr.database.Singleton;
 import fr.gsbcr.model.ModeleCompteRendu;
 import fr.gsbcr.model.ModeleException;
@@ -25,25 +25,27 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class GsbCR {
 
 	/**
-	 * @param args
-	 * @throws UnsupportedLookAndFeelException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
-	 * @throws ClassNotFoundException 
-	 * @throws SQLException 
-	 * @throws ModeleException 
+	 * @param args Arguments
+	 * @throws UnsupportedLookAndFeelException   Peut générer une exception d'incompatibilité
+	 * @throws IllegalAccessException   Peut générer une exception d'accès illégal
+	 * @throws InstantiationException  Peut générer une exception d'instanciation
+	 * @throws ClassNotFoundException  Peut générer une exception de ClassNotFound
+	 * @throws SQLException  Peut générer une exception sql
+	 * @throws ModeleException Peut générer une exception 
 	 */
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException, ModeleException, UnsupportedLookAndFeelException {
 		StartApp.startApp();
 		System.out.println("GsbCR::main()") ;
 		
-		System.out.println("Instanciation de Singleton") ;
+		System.out.println("[Création d'une instance de connexion]") ;
 		
 		Singleton.getAInstance() ;
 		
+		System.out.println("[Création d'un Statement]") ;
+		
 		Singleton.getStmt();
 		
-		System.out.println(" [Création du mod�le]") ;
+		System.out.println("[Création du modèle]") ;
 		ModeleCompteRendu modele = new ModeleCompteRendu() ;
 		
 		System.out.println(" [Création du contrôleur]") ;

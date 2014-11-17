@@ -5,9 +5,9 @@ import fr.gsbcr.model.ModeleCompteRendu;
 import java.util.* ;
 import javax.swing.table.* ;
 
-/** Modèle du tableau des clients
+/** Modèle du tableau des praticiens hésitants
  * 
- * @author xilim
+ * @author rafina
  *
  */
 public class ModeleListePraticienH extends AbstractTableModel {
@@ -20,7 +20,7 @@ public class ModeleListePraticienH extends AbstractTableModel {
 	private final String[] entetes = {"Nom","Prénom","Ville","Coefficient de notoriété","Coefficient de confiance"} ;
 	private ModeleCompteRendu modele ;
 	
-	/** Créer le modèle de la liste des clients
+	/** Créer le modèle de la liste des praticiens hésitants
 	 * 
 	 * @param modele Le modèle de l'application
 	 */

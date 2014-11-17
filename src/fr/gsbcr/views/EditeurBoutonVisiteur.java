@@ -7,9 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
 
-/** Editeur des boutons du tableau des locations
+/** Editeur des boutons du tableau des visiteurs
  * 
- * @author xilim
+ * @author rafina
  *
  */
 public class EditeurBoutonVisiteur extends DefaultCellEditor {

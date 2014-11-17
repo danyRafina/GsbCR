@@ -10,6 +10,9 @@ import com.mysql.jdbc.PreparedStatement;
 
 import fr.gsbcr.model.ModeleException;
 
+/** Classe Singleton de l'application
+ * @author rafina
+ */
 public class Singleton {
 	private String connectionInf = "jdbc:mysql://localhost:3306/GsbCRSlam";
 	private String userName ="root";
@@ -18,6 +21,10 @@ public class Singleton {
 	private static Connection instance;
 	private static Singleton aInstance;
 	
+	/** Création de Singleton 
+	 * @throws SQLException
+	 * @throws ModeleException
+	 */
 	private Singleton() throws SQLException ,ModeleException{
 		try {
 			Singleton.instance = DriverManager.getConnection(this.connectionInf,this.userName,this.userPass);
@@ -29,6 +36,11 @@ public class Singleton {
 		
 		
 	}
+	/** Retourne une instance de connexion unique
+	 * @return Instance de connexion
+	 * @throws SQLException  Peut générer une exception sql
+	 * @throws ModeleException  Peut générer une exception 
+	 */
 	
 	public static Singleton getAInstance() throws SQLException, ModeleException{
 		if(Singleton.instance == null){
@@ -37,7 +49,18 @@ public class Singleton {
 		return aInstance;
 	
 	}
-
+	/** Modification du statement 
+	 * @param stmt Statement
+	 */
+	
+	public static void setStmt(Statement stmt) {
+		Singleton.stmt = stmt;
+	}
+	
+	/** Création d'un statement 
+	 * @return stmt Statement 
+	 * @throws SQLException  Peut générer une exception sql
+	 */
 	public static Statement getStmt() throws SQLException {
 		try {
 			Singleton.setStmt((Statement)Singleton.instance.createStatement());
@@ -48,45 +71,67 @@ public class Singleton {
 		return stmt;
 	}
 	
-	public static ResultSet getResult(String query) throws SQLException{
+	/** Création d'une requête préparé
+	 * @param sQuery Requête textuelle
+	 * @return pstmt Requête préparé
+	 * @throws SQLException  Peut générer une exception sql
+	 */
+	public static PreparedStatement prepareStatement(String sQuery) throws SQLException{
+		PreparedStatement pstmt = (PreparedStatement) Singleton.instance.prepareStatement(sQuery);
+		return pstmt;
+		
+	}
+	
+	/** Retourne le résultat d'une requête 
+	 * @param sQuery Requête à exécuter
+	 * @return result Résultat de la requête 
+	 * @throws SQLException  Peut générer une exception sql
+	 */
+	
+	public static ResultSet getResult(String sQuery) throws SQLException{
 		try {
-			return Singleton.stmt.executeQuery(query);
+			ResultSet result = Singleton.stmt.executeQuery(sQuery);
+			return result;
 		}
 		catch(SQLException event){
 			throw event;
 		}
 	}
 	
-	public static ResultSet getResult(java.sql.PreparedStatement pstmt) throws SQLException{
+	/** Retourne le résultat d'une requête préparé
+	 * @param pstmt Requête préparé à exécuter
+	 * @return result Résultat de la requête préparé
+	 * @throws SQLException  Peut générer une exception sql
+	 */
+	
+	public static ResultSet getResult(PreparedStatement pstmt) throws SQLException{
 		try {
-			return pstmt.executeQuery();
+			ResultSet result = pstmt.executeQuery();
+			return result;
 		}
 		catch(SQLException event){
 			throw event;
 		}
 	}
 	
-	public static int getResultUpdate(String query) throws SQLException{
+	/** Retourne le résultat d'une requête d'insertion ou de mise à jour
+	 * @param sQuery Requête à exécuter
+	 * @return result Résultat de la requête 
+	 * @throws SQLException  Peut générer une exception sql
+	 */
+	
+	public static int getResultUpdate(String sQuery) throws SQLException{
 		try {
-			return Singleton.stmt.executeUpdate(query);
+			return Singleton.stmt.executeUpdate(sQuery);
 		}
 		catch(SQLException event){
 			throw event;
 		}
 	}	
 	
-	
-
-	public static void setStmt(Statement stmt) {
-		Singleton.stmt = stmt;
-	}
-	
-	public static PreparedStatement prepareStatement(String query) throws SQLException{
-		PreparedStatement pstmt = (PreparedStatement) Singleton.instance.prepareStatement(query);
-		return pstmt;
-		
-	}
-	
+	/** Destruction de l'instance de connexion
+	 * @throws SQLException  Peut générer une exception sql
+	 */
 	public static void destroyInstance() throws SQLException{
 		if(Singleton.instance != null){
 			Singleton.instance.close();

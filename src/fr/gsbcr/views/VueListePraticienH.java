@@ -4,13 +4,13 @@ import java.awt.* ;
 
 import javax.swing.* ;
 
-import fr.gsbcr.controler.Controleur;
+import fr.gsbcr.controller.Controleur;
 import fr.gsbcr.model.ModeleCompteRendu;
 import fr.gsbcr.model.ModeleListePraticienH;
 
-/** Vue dédiée à l'affichage de la liste des clients
+/** Vue dédiée à l'affichage de la liste des praticiens hésitants
  * 
- * @author xilim
+ * @author rafina
  *
  */
 public class VueListePraticienH extends JPanel {
@@ -22,7 +22,7 @@ public class VueListePraticienH extends JPanel {
 	private ModeleListePraticienH modeleTableauPraticienH ;
 	private JTable tableauPraticienH ;
 	
-	/** Créer la vue dédiée à l'affichage de la liste des clients
+	/** Créer la vue dédiée à l'affichage de la liste des praticiens hésitants
 	 * 
 	 * @param modele Le modèle
 	 * @param controleur Le contrôleur
@@ -47,7 +47,6 @@ public class VueListePraticienH extends JPanel {
 		tableauPraticienH.setRowHeight(30) ;
 		
 		JScrollPane spPraticienH = new JScrollPane(tableauPraticienH) ;
-		//spClients.setPreferredSize(new Dimension(1290,420)) ;
 		spPraticienH.setPreferredSize(new Dimension(1090,420)) ;
 		
 		boxTableau.add(spPraticienH) ;
@@ -63,7 +62,6 @@ public class VueListePraticienH extends JPanel {
 	 * 
 	 */
 	public void actualiser(){
-		System.out.println("VueListeClients::actualiser()") ;
 		modeleTableauPraticienH = new ModeleListePraticienH(modele) ;
 		tableauPraticienH.setModel(modeleTableauPraticienH) ;
 	}
