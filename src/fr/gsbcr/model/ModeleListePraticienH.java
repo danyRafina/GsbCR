@@ -2,7 +2,10 @@ package fr.gsbcr.model ;
 import fr.gsbcr.entities.Praticien;
 import fr.gsbcr.model.ModeleCompteRendu;
 
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.* ;
+
 import javax.swing.table.* ;
 
 /** Modèle du tableau des praticiens hésitants
@@ -17,7 +20,7 @@ public class ModeleListePraticienH extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private List<Praticien> praticienH ;
-	private final String[] entetes = {"Nom","Prénom","Ville","Coefficient de notoriété","Coefficient de confiance"} ;
+	private final String[] entetes = {"Nom","Prénom","Ville","Coefficient de notoriété","Coefficient de confiance","Temps écoulé depuis la dernière visite"} ;
 	private ModeleCompteRendu modele ;
 	
 	/** Créer le modèle de la liste des praticiens hésitants
@@ -77,7 +80,14 @@ public class ModeleListePraticienH extends AbstractTableModel {
 			case 3 : 
 				return praticienH.get(indiceLigne).getPraCoefN();
 			case 4 : 
-				return praticienH.get(indiceLigne).getPraCoefConf();
+				return praticienH.get(indiceLigne).getPraCoefConf() ;
+			case 5 : 
+			try {
+				return modele.diffEnJour(praticienH.get(indiceLigne).getPraNum()) +" jour(s)";
+			} catch (SQLException | ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			default :
 				return null ;
 		}

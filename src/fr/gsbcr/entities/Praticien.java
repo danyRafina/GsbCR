@@ -1,5 +1,7 @@
 package fr.gsbcr.entities;
 
+import java.util.GregorianCalendar;
+
 /** Classe Praticien de l'application
  * @author rafina
  *
@@ -13,8 +15,25 @@ public class Praticien {
 	private String praVille;
 	private float praCoefN;
 	private int praCoefConf;
+	private GregorianCalendar gcDateVisite;
 	
 	
+	/** Obtenir la date de visite 
+	 * @return La date de visite
+	 */
+	public GregorianCalendar getGcDateVisite() {
+		return gcDateVisite;
+	}
+
+
+	/** Modifier la date de visite 
+	 * @param gcDateVisite La nouvelle date de visite 
+	 */
+	public void setGcDateVisite(GregorianCalendar gcDateVisite) {
+		this.gcDateVisite = gcDateVisite;
+	}
+
+
 	/** Création du praticien
 	 * @param praNum Numéro du praticien
 	 * @param praNom Nom du praticien

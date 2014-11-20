@@ -3,6 +3,9 @@ import fr.gsbcr.entities.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.* ;
 
 /** Modèle de l'application
@@ -15,6 +18,7 @@ public class ModeleCompteRendu {
 	private List<Praticien> praticien = new ArrayList<Praticien>() ;
 	private List<CompteRendu> compteRendus = new ArrayList<CompteRendu>();
 	private ResultSet result = null;
+	private Date newDate ;
 	
 	/** Créer le modèle
 	 * @throws SQLException  Peut générer une exception sql
@@ -194,6 +198,27 @@ public class ModeleCompteRendu {
 	 */
 	public List<Collaborateur> getVisiteur() {
 		return visiteur;
+	}
+	
+	/** Obtenir le temps écoulé entre la date de visite du praticien et la date actuelle
+	 * 
+	 * @param iPraNum Numéro du praticien
+	 * @return Nombre de jour de différence
+	 * @throws SQLException Peut générer une exception sql
+	 * @throws ParseException Peut généré une erreur de conversion
+	 */
+	public long diffEnJour(int iPraNum) throws SQLException, ParseException{
+		this.result = Queries.getDateVisite(iPraNum);
+		while(result.next()){
+			String sDateVisite = this.result.getString("DATE_VISITE");
+	        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-M-dd hh:mm:ss");;
+	        newDate = formatter.parse(sDateVisite +" 00:00:00");
+	        System.out.println(newDate);
+	     }
+	     Date today = new Date();
+	     long diff = today.getTime( ) - newDate.getTime( );
+	     long resultDate = diff / (1000*60*60*24);
+	     return resultDate;
 	}
 
 }

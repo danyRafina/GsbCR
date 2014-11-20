@@ -17,7 +17,8 @@ public class Queries {
 		"SELECT * from PRATICIEN inner join RAPPORT_VISITE on RAPPORT_VISITE.PRA_NUM= PRATICIEN.PRA_NUM where COEF_CONF < 5 ",
 		"SELECT * from RAPPORT_VISITE inner join MOTIF on RAPPORT_VISITE.RAP_MOTIF= MOTIF.MOT_NUM where COL_MATRICULE = ? and year(RAP_DATE) = ? and month (RAP_DATE) = ?",
 		"SELECT * from COLLABORATEUR inner join TRAVAILLER on COLLABORATEUR.COL_MATRICULE = TRAVAILLER.COL_MATRICULE where TRA_ROLE = 'Visiteur' ",
-		"UPDATE RAPPORT_VISITE SET RAP_EST_LU = 1 WHERE RAP_NUM = ? "
+		"UPDATE RAPPORT_VISITE SET RAP_EST_LU = 1 WHERE RAP_NUM = ? ",
+		"SELECT DATE_VISITE from RAPPORT_VISITE WHERE PRA_NUM = ?"
 	};
 	private static ResultSet result;
 	
@@ -84,6 +85,19 @@ public class Queries {
 			
 			PreparedStatement pstmt = (PreparedStatement) Singleton.prepareStatement(tblSQuerySelect[4]);
 			pstmt.setInt(1,iRapNum);
+			ResultSet result = Singleton.getResult(pstmt);
+			return result;
+	}
+	
+	/** Récupérer la date de visite d'un compte-rendu en fonction du praticien
+	 * @param iPraNum Numéro du praticien
+	 * @return Résultat de la requête 
+	 * @throws SQLException  Peut générer une exception sql
+	 */
+	public static ResultSet getDateVisite(int iPraNum) throws SQLException{
+			
+			PreparedStatement pstmt = (PreparedStatement) Singleton.prepareStatement(tblSQuerySelect[5]);
+			pstmt.setInt(1,iPraNum);
 			ResultSet result = Singleton.getResult(pstmt);
 			return result;
 	}

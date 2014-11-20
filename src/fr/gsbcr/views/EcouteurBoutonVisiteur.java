@@ -88,7 +88,7 @@ public class EcouteurBoutonVisiteur implements ActionListener {
 						mcMonth.setMonth(mcMonth.getMonth() + 1);
 						boolean success = modele.getCR(ycYear.getYear(),mcMonth.getMonth(),sColMatricule);
 						if(success == true){
-							JOptionPane.showMessageDialog(null,"Désolé, mais il n'y a pas de contre-rendu rédigé à cette date . Merci de réesayer ","Erreur",JOptionPane.WARNING_MESSAGE);
+							JOptionPane.showMessageDialog(null,"Désolé, mais il n'y a pas de compte-rendu rédigé à cette date . Merci de réesayer ","Erreur",JOptionPane.WARNING_MESSAGE);
 						}
 						else {
 							controleur.visualiserCR();
