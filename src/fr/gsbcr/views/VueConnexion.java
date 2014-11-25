@@ -94,14 +94,25 @@ public class VueConnexion extends JPanel implements ActionListener {
 					}
 					if(success == false) {
 						GuiGsbCR.showMessage("Erreur : Veuillez vérifer l'identifiant ou le mot de passe saisie ");
+						this.actualiser();
+						this.tfUserId.setBackground(Color.PINK);
+						this.pfUserPass.setBackground(Color.pink);
+						this.actionPerformed(event);
 					}
 				}
 				else {
 					GuiGsbCR.showMessage("Erreur : Les champs sont vides ! ");
+					this.actualiser();
+					this.tfUserId.setBackground(Color.PINK);
+					this.pfUserPass.setBackground(Color.pink);
+					this.actionPerformed(event);
 				}
 			
 			}
+			this.tfUserId.setBackground(Color.WHITE);;
+			this.pfUserPass.setBackground(Color.WHITE);
 			this.actualiser();
+			
 			
 		}
 		

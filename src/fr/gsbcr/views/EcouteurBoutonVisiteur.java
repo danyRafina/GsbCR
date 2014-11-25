@@ -77,10 +77,10 @@ public class EcouteurBoutonVisiteur implements ActionListener {
 				JLabel lbAnnee = new JLabel("Année");
 				lbMois.setLabelFor(mcMonth);
 				lbAnnee.setLabelFor(ycYear);
-				String sMsgHeader = "Choisir le mois et l'année ( Visiteur : "+sColNom + " "+ sColPrenom+" )";
+				String sMsgHeader = "Choisir le mois et l'année du compte-rendu pour : "+sColNom + " "+ sColPrenom;
 				Object[] content = {sMsgHeader,lbMois,mcMonth,lbAnnee,ycYear};
 				int iResultJP = JOptionPane.showOptionDialog(null,content, "Choix",
-				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
 				null, null, null);
 				if (iResultJP == JOptionPane.YES_OPTION){
 					try {
@@ -89,6 +89,7 @@ public class EcouteurBoutonVisiteur implements ActionListener {
 						boolean success = modele.getCR(ycYear.getYear(),mcMonth.getMonth(),sColMatricule);
 						if(success == true){
 							JOptionPane.showMessageDialog(null,"Désolé, mais il n'y a pas de compte-rendu rédigé à cette date . Merci de réesayer ","Erreur",JOptionPane.WARNING_MESSAGE);
+							this.actionPerformed(e);
 						}
 						else {
 							controleur.visualiserCR();
