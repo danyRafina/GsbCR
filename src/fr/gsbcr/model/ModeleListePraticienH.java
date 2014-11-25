@@ -32,6 +32,7 @@ public class ModeleListePraticienH extends AbstractTableModel {
 		System.out.println("ModeleListePraticienH::ModeleListePraticienH()") ;
 		this.modele = modele ;
 		praticienH = modele.getPraticienH() ;
+		
 	}
 	
 	/** Obtenir le nombre de lignes

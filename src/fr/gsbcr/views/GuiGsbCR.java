@@ -9,6 +9,8 @@ import java.awt.MenuBar;
 import java.awt.MenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
@@ -273,6 +275,9 @@ public class GuiGsbCR extends JFrame implements ActionListener {
 	public static void showMessage(String error){
 		JOptionPane.showMessageDialog(null,error);
 	}
+	
+	
+	
 
 	/** Gérer les actions de l'utilisateur
 	 * 
@@ -283,7 +288,6 @@ public class GuiGsbCR extends JFrame implements ActionListener {
 		System.out.println("----------------------------------------") ;
 		System.out.println("::actionPerformed()") ;
 		Object sourceEvt = evenement.getSource() ;
-		
 		if(sourceEvt == this.itemQuitter ){
 			try {
 				int iSelected = JOptionPane.showConfirmDialog(null,"Voulez-vous vraiment quitter l'application ?", "Quitter ", JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE);
@@ -301,7 +305,9 @@ public class GuiGsbCR extends JFrame implements ActionListener {
 				int iSelected = JOptionPane.showConfirmDialog(null,"Voulez-vous vraiment vous déconnecter ?", "Déconnexion", JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE);
 				if(iSelected == JOptionPane.OK_OPTION) {
 					JOptionPane.showMessageDialog(null,"Vous êtes dorénavent déconnecté", "Déconnexion réussie",JOptionPane.INFORMATION_MESSAGE);
+					this.modele.autoReset();
 					this.controleur.deconnexion() ;
+					
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

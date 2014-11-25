@@ -105,7 +105,7 @@ public class Controleur {
 	 */
 	public void deconnexion() throws SQLException{
 		System.out.println("Controleur::deconnexion()") ;
-		Singleton.destroyInstance();
+		//Singleton.destroyInstance();
 		this.vuePrincipale.changeStateMenu(0);
 		this.vuePrincipale.changerDeVue("Vue Connexion") ;
 	}

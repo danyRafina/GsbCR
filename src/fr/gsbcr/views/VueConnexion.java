@@ -78,23 +78,31 @@ public class VueConnexion extends JPanel implements ActionListener {
 		System.out.println("VueConnexion::actionPerformed()") ;
 		Object sourceEvt = event.getSource() ;
 		if(sourceEvt == this.bSeConnecter){
+
 			Object[] content = {lbText1,lbUserId,tfUserId,lbUserPass,pfUserPass};
 			int iResultJP = JOptionPane.showOptionDialog(this,content, "Fenêtre de connexion",
-			JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
-			null, null, null);
+					JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
+					null, null, null);
 			if (iResultJP == JOptionPane.OK_OPTION){
-				boolean success = false;
-				try {
-					success = this.controleur.seConnecter(tfUserId.getText(),pfUserPass.getText());
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				if( (tfUserId.getText().isEmpty() || pfUserPass.getText().isEmpty() ) == false  ){
+					boolean success = false;
+					try {
+						success = this.controleur.seConnecter(tfUserId.getText(),pfUserPass.getText());
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					if(success == false) {
 						GuiGsbCR.showMessage("Erreur : Veuillez vérifer l'identifiant ou le mot de passe saisie ");
 					}
 				}
+				else {
+					GuiGsbCR.showMessage("Erreur : Les champs sont vides ! ");
+				}
+			
+			}
 			this.actualiser();
+			
 		}
 		
 	}

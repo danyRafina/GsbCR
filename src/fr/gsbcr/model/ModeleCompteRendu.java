@@ -18,7 +18,8 @@ public class ModeleCompteRendu {
 	private List<Praticien> praticien = new ArrayList<Praticien>() ;
 	private List<CompteRendu> compteRendus = new ArrayList<CompteRendu>();
 	private ResultSet result = null;
-	private Date newDate ;
+	private Date newDate = null ;
+	private String sMatriculeDelegC = null;
 	
 	/** Créer le modèle
 	 * @throws SQLException  Peut générer une exception sql
@@ -26,29 +27,15 @@ public class ModeleCompteRendu {
 	 */
 	public ModeleCompteRendu() throws SQLException{
 		super() ;
-		System.out.println("ModeleCompteRendu::ModeleCompteRendu()") ;
-		this.init();
-		
+		System.out.println("ModeleCompteRendu::ModeleCompteRendu()") ;	
 	}
-	/** Peupler la base de données manipulée
+	
+	/** Peupler la liste des Praticiens hésitants
 	 * @throws SQLException 
 	 * 
 	 */
-	private void init() throws SQLException {
-		this.result = Queries.queryVisiteur();
-		while (result.next()) {
-			if(visiteur.size() != 0 ) {
-				System.out.println(result.getString("COL_MATRICULE"));
-				if(rechercherCollabo(result.getString("COL_MATRICULE")) == null) {
-					System.out.println("NUL");
-					this.visiteur.add(new Collaborateur(result.getString("COL_MATRICULE"),result.getString("COL_NOM"), result.getString("COL_PRENOM"), result.getString("COL_ADRESSE"), result.getInt("COL_CP"),result.getString("COL_VILLE"),result.getString("TRA_ROLE"),result.getString("COL_MDP")));
-				}
-			}
-			else {
-				System.out.println("SIZE 0");
-				this.visiteur.add(new Collaborateur(result.getString("COL_MATRICULE"),result.getString("COL_NOM"), result.getString("COL_PRENOM"), result.getString("COL_ADRESSE"), result.getInt("COL_CP"),result.getString("COL_VILLE"),result.getString("TRA_ROLE"),result.getString("COL_MDP")));
-			}
-		   }
+	
+	private void initListePraticienH() throws SQLException {
 		this.result= Queries.queryPraticienH();
 		while (result.next()) {
 			this.praticien.add(new Praticien(result.getInt("PRA_NUM"),result.getString("PRA_NOM"), result.getString("PRA_PRENOM"), result.getString("PRA_ADRESSE"), result.getInt("PRA_CP"),result.getString("PRA_VILLE"),result.getFloat("PRA_COEFNOTORIETE"),result.getInt("COEF_CONF")));
@@ -118,15 +105,6 @@ public class ModeleCompteRendu {
 		Queries.setRapLu(iRapNum);
 	}
 
-/*
- * (non-Javadoc)
- * @see java.lang.Object#toString()
- */
-
-/*public String toString() {
-	System.out.println("ModeleLocations::toString()") ;
-	return "MetierLocations [locations=" + locations + "]";
-}*/
 	/** Vérifier si le collaborateur est un visiteur
 	 * 
 	 * @param unCollaborateur Collaborateur à vérifier
@@ -155,6 +133,9 @@ public class ModeleCompteRendu {
 			if(login.equals(result.getString("COL_MATRICULE"))) {
 				if(mdp.equals(result.getString("COL_MDP"))) {
 					bToAccess = true;
+					this.setDelegueConnecter(result.getString("COL_MATRICULE"));
+					this.initListeVis();
+					this.initListePraticienH();
 				}
 			}
 		}
@@ -219,6 +200,47 @@ public class ModeleCompteRendu {
 	     long diff = today.getTime( ) - newDate.getTime( );
 	     long resultDate = diff / (1000*60*60*24);
 	     return resultDate;
+	}
+	
+	/** Obtenir le matricule du délégué connecté
+	 * 
+	 * @return Matricule du délégué connecté
+	 */
+	public String getDelegueConnecter(){
+		return this.sMatriculeDelegC;
+	}
+	
+	/** Définir un matricule du délégué connecté
+	 * 
+	 * @param sMatriculeDelegC Matricule du délégué
+	 */
+	public void setDelegueConnecter(String sMatriculeDelegC){
+		this.sMatriculeDelegC = sMatriculeDelegC;
+	}
+	
+	/** Initialisation de la liste des visiteurs en fonction du délégué connecté
+	 * 
+	 * @throws SQLException
+	 */
+	public void initListeVis() throws SQLException{
+		
+		this.result = Queries.queryVisiteur(this.getDelegueConnecter());
+		while (result.next()) {
+
+			this.visiteur.add(new Collaborateur(result.getString("COL_MATRICULE"),result.getString("COL_NOM"), result.getString("COL_PRENOM"), result.getString("COL_ADRESSE"), result.getInt("COL_CP"),result.getString("COL_VILLE"),result.getString("TRA_ROLE"),result.getString("COL_MDP")));
+		}
+	}
+	
+	/** Réinitialiser tous les attributs de la classe
+	 * 
+	 */
+	public void autoReset(){
+		this.visiteur = new ArrayList<Collaborateur>() ;
+		this.praticien = new ArrayList<Praticien>() ;
+		this.compteRendus = new ArrayList<CompteRendu>();
+		this.result = null;
+		this.newDate = null ;
+		this.sMatriculeDelegC = null;
 	}
 
 }
