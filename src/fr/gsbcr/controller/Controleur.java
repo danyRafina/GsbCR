@@ -77,6 +77,13 @@ public class Controleur {
 		
 	}
 	
+	/** Visualiser les informations du compte-rendu
+	 */
+	public void visualiserInfoCR() {
+		this.vuePrincipale.changerDeVue("Info compte-rendu") ;
+		
+	}
+	
 	/** Connecter un délégué
 	 * 
 	 * @param sLogin L'identifiant du délégué

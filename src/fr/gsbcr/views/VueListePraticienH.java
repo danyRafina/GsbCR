@@ -3,6 +3,8 @@ package fr.gsbcr.views;
 import java.awt.* ;
 
 import javax.swing.* ;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import fr.gsbcr.controller.Controleur;
 import fr.gsbcr.model.ModeleCompteRendu;
@@ -44,6 +46,30 @@ public class VueListePraticienH extends JPanel {
 		modeleTableauPraticienH = new ModeleListePraticienH(modele) ;
 		tableauPraticienH = new JTable(modeleTableauPraticienH) ;
 		//tableauPraticienH.setAutoCreateRowSorter(true);
+	
+		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(modeleTableauPraticienH);
+	    tableauPraticienH.setRowSorter(sorter);
+		tableauPraticienH.getRowSorter().toggleSortOrder(1);
+	    //((DefaultRowSorter<TableModel, Integer>) tableauPraticienH.getRowSorter()).setSortable(1,false);
+	    sorter.setSortable(2, false);
+	    sorter.setSortsOnUpdates(true);
+	    //sorter.setComparator(5, modeleTableauPraticienH.compare(c1, c2));
+	  
+	    
+        //Evenement : click sur une ligne du tableau
+	  /*  tableauPraticienH.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                //N° de la ligne séléctionnée
+                int row =  tableauPraticienH.getSelectedRow();
+                //N° de ligne du tableau trié
+                int sortedRow =  tableauPraticienH.convertRowIndexToModel(row);
+                Object pe =  tableauPraticienH.getModel().getValueAt(sortedRow, 0);
+                Object pr =  tableauPraticienH.getModel().getValueAt(sortedRow, 1);
+                Object px = tableauPraticienH.getModel().getValueAt(sortedRow, 2);
+                String s=pe + " a pris un " + pr + " au prix de " + px + " Eur";
+                System.out.println(s);
+            }
+        });*/
 
 
 
@@ -60,6 +86,7 @@ public class VueListePraticienH extends JPanel {
 		this.add(boxPrincipal) ;
 		
 	}
+	  
 	
 	/** Actualiser le modèle du tableau
 	 * 

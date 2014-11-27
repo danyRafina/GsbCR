@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
+import fr.gsbcr.controller.Controleur;
 import fr.gsbcr.model.ModeleCompteRendu;
 import fr.gsbcr.model.ModeleException;
 import fr.gsbcr.model.ModeleListeCR;
@@ -58,9 +59,11 @@ public class EcouteurBoutonCR implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		System.out.println("EcouteurBoutonCR::actionPerformed()") ;
 		ModeleCompteRendu modele = ((ModeleListeCR)this.table.getModel()).getModele() ;
-		String sBilan =  ((ModeleListeCR)this.table.getModel()).getBilan(this.row) ;
-		String sMotif =((ModeleListeCR)this.table.getModel()).getMotif(this.row) ;
+		Controleur controleur = ((ModeleListeCR)this.table.getModel()).getControleur() ;
+		//String sBilan =  ((ModeleListeCR)this.table.getModel()).getBilan(this.row) ;
+		//String sMotif =((ModeleListeCR)this.table.getModel()).getMotif(this.row) ;
 		int iNumRapport =((ModeleListeCR)this.table.getModel()).getNumRapport(this.row) ;
+		String sColMatricule =((ModeleListeCR)this.table.getModel()).getMatricule(this.row) ;
 		String sRapLu =  ((ModeleListeCR)this.table.getModel()).getEtat(this.row) ;
 		
 		try {
@@ -76,11 +79,14 @@ public class EcouteurBoutonCR implements ActionListener {
 							e1.printStackTrace();
 						}
 					}
-					Object[] content = {"Rapport numéro : "+iNumRapport,"\n","Bilan : "+sBilan,"Motif : "+sMotif,"\n"};
+					/*Object[] content = {"Rapport numéro : "+iNumRapport,"\n","Bilan : "+sBilan,"Motif : "+sMotif,"\n"};
 					JOptionPane.showOptionDialog(null,content, "Détails",
 					JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
 					null, null, null);
-					break ;
+					break ;*/
+					modele.rechercherCR(sColMatricule, iNumRapport);
+					controleur.visualiserInfoCR();
+					
 			}
 		} catch (HeadlessException e1) {
 			// TODO Auto-generated catch block

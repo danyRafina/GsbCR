@@ -20,7 +20,7 @@ public class ModeleListePraticienH extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private List<Praticien> praticienH ;
-	private final String[] entetes = {"Nom","Prénom","Ville","Coefficient de notoriété","Coefficient de confiance","Temps écoulé depuis la dernière visite"} ;
+	private final String[] entetes = {"Nom","Prénom","Ville","Coefficient de notoriété","Coefficient de confiance","Temps écoulé (Jour(s))"} ;
 	private ModeleCompteRendu modele ;
 	
 	/** Créer le modèle de la liste des praticiens hésitants
@@ -32,7 +32,6 @@ public class ModeleListePraticienH extends AbstractTableModel {
 		System.out.println("ModeleListePraticienH::ModeleListePraticienH()") ;
 		this.modele = modele ;
 		praticienH = modele.getPraticienH() ;
-		
 	}
 	
 	/** Obtenir le nombre de lignes
@@ -63,12 +62,14 @@ public class ModeleListePraticienH extends AbstractTableModel {
 		return entetes[indiceColonne] ;
 	}
 	
+	
 	/** Obtenir la valeur d'une cellule
 	 * 
 	 * @param indiceLigne L'indice de la ligne
 	 * @param indiceColonne L'indice de la colonne
 	 * @return La valeur de la cellule
 	 */
+	
 	public Object getValueAt(int indiceLigne, int indiceColonne){
 		System.out.println("ModeleListePraticienH::getValueAt()") ;
 		switch(indiceColonne){
@@ -84,7 +85,7 @@ public class ModeleListePraticienH extends AbstractTableModel {
 				return praticienH.get(indiceLigne).getPraCoefConf() ;
 			case 5 : 
 			try {
-				return modele.diffEnJour(praticienH.get(indiceLigne).getPraNum()) +" jour(s)";
+				return modele.diffEnJour(praticienH.get(indiceLigne).getPraNum());
 			} catch (SQLException | ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

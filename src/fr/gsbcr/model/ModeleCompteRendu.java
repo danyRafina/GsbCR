@@ -20,6 +20,7 @@ public class ModeleCompteRendu {
 	private ResultSet result = null;
 	private Date newDate = null ;
 	private String sMatriculeDelegC = null;
+	private CompteRendu contreRenduSelected = null;
 	
 	/** Créer le modèle
 	 * @throws SQLException  Peut générer une exception sql
@@ -64,6 +65,20 @@ public class ModeleCompteRendu {
 	 */
 	public List<CompteRendu> getCompteRendus() {
 		return compteRendus;
+	}
+	
+	/** Rechercher un compte-rendu
+	 * 
+	 * @param sColMatricule Matricule du visiteur
+	 * @param iNumCR Numéro du compte-rendu 
+	 * @return Le compte-rendu recherché
+	 */
+	public void rechercherCR(String sColMatricule, int iNumCR){
+		for(CompteRendu unCompteRendu : compteRendus){
+			if(sColMatricule == unCompteRendu.getCollaborateur().getsColMatricule() && iNumCR == unCompteRendu.getiNumCR()){
+				this.contreRenduSelected  = unCompteRendu;
+			}
+		}
 	}
 	
 	/** Rechercher un collaborateur
@@ -155,10 +170,11 @@ public class ModeleCompteRendu {
 		this.result= Queries.queryCompteRendu(colMatricule,year,month);
 		while (this.result.next()) {
 		   System.out.println("PASSAGE WHILE 3");
-		   Collaborateur collabo = rechercherCollabo(result.getString("COL_MATRICULE"));
+		   Collaborateur collabo = rechercherCollabo(colMatricule);
 		   Praticien pra = rechercherPraticien(result.getInt("PRA_NUM"));
 		   
 			this.compteRendus.add(new CompteRendu(collabo,result.getInt("RAP_NUM"), pra, result.getDate("RAP_DATE"),result.getDate("DATE_VISITE"),result.getString("RAP_BILAN"),result.getString("MOT_LABEL"),result.getInt("COEF_CONF"),getEquivalent(result.getByte("RAP_EST_LU"))));
+			System.out.println(collabo.getsColMatricule()+" ");
 		}
 		if(compteRendus.size() == 0){
 			bSuccess = true;
@@ -241,6 +257,21 @@ public class ModeleCompteRendu {
 		this.result = null;
 		this.newDate = null ;
 		this.sMatriculeDelegC = null;
+		this.contreRenduSelected = null;
+	}
+
+	/** Retourne le compte-rendu sélectionné
+	 * @return Le contre-rendu sélectionné
+	 */
+	public CompteRendu getContreRenduSelected() {
+		return contreRenduSelected;
+	}
+
+	/** Modifier le compte-rendu séléctionné
+	 * @param contreRenduSelected Le compte-rendu à définir
+	 */
+	public void setContreRenduSelected(CompteRendu contreRenduSelected) {
+		this.contreRenduSelected = contreRenduSelected;
 	}
 
 }

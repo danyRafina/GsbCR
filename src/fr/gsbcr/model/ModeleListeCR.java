@@ -41,7 +41,6 @@ public class ModeleListeCR extends AbstractTableModel  {
 	 * @return Le nombre de lignes
 	 */
 	public int getRowCount(){
-		//System.out.println("ModeleListeClients::getRowCount()") ;
 		return compteRendus.size() ;
 	}
 
@@ -50,7 +49,6 @@ public class ModeleListeCR extends AbstractTableModel  {
 	 * @return Le nombre de colonnes
 	 */
 	public int getColumnCount(){
-		//System.out.println("ModeleListeClients::getColumnCount()") ;
 		return entetes.length ;
 	}
 	
@@ -60,8 +58,11 @@ public class ModeleListeCR extends AbstractTableModel  {
 	 * @return Le nom de la colonne
 	 */
 	public String getColumnName(int indiceColonne){
-		//System.out.println("ModeleListeClients::getColumnName()") ;
 		return entetes[indiceColonne] ;
+	}
+	
+	public String getMatricule(int indiceLigne){
+		return compteRendus.get(indiceLigne).getCollaborateur().getsColMatricule() ;
 	}
 	
 	/** Obtenir la valeur d'une cellule

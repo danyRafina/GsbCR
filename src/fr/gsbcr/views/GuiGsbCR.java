@@ -49,6 +49,7 @@ public class GuiGsbCR extends JFrame implements ActionListener {
 	private VueListeVisiteur vueVisualiserVisiteurs ;
 	private VueListeCompteRendu vueVisualiserCR ;
 	private VueAPropos vueAPropos ;
+	private VueInfoCR vueInfoCR;
 	
 	private CardLayout vues ;
 	private Container conteneur ;
@@ -81,12 +82,14 @@ public class GuiGsbCR extends JFrame implements ActionListener {
 		vueConnexion = new VueConnexion(modele,controleur) ;
 		vueVisualiserCR = new VueListeCompteRendu(modele,controleur) ;
 		vueAPropos = new VueAPropos(controleur) ;
+		vueInfoCR = new VueInfoCR(modele,controleur);
 		
 		this.conteneur.add(vueVisualiserPraticien,"Liste praticiens hesitants") ;
 		this.conteneur.add(vueVisualiserVisiteurs,"Liste des Visiteurs") ;
 		this.conteneur.add(vueVisualiserCR,"Liste des Comptes Rendus") ;
 		this.conteneur.add(vueConnexion,"Vue Connexion") ;
 		this.conteneur.add(vueAPropos,"A propos") ;
+		this.conteneur.add(vueInfoCR,"Info compte-rendu");
 		
 		this.vues.show(this.conteneur,"Vue Connexion");
 		
@@ -243,6 +246,10 @@ public class GuiGsbCR extends JFrame implements ActionListener {
 		}
 		else if(nomVue.equals("A propos")){
 			this.vueAPropos.actualiser() ;
+			
+		}
+		else if(nomVue.equals("Info compte-rendu")){
+			this.vueInfoCR.actualiser() ;
 			
 		}
 		System.out.println("GuiRentaco::changerVue()::show name of view : "+ nomVue ) ;
