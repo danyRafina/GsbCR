@@ -1,9 +1,12 @@
 package fr.gsbcr.views;
 
 import java.awt.Dimension;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.Box;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -45,16 +48,13 @@ public class VueListeCompteRendu extends JPanel{
 			Box boxTableau = Box.createHorizontalBox() ;
 
 			boxEtiquette.add(new JLabel("Compte Rendus  :")) ;
-			boxEtiquette.add(Box.createHorizontalGlue()) ;
-			
+			boxEtiquette.add(Box.createHorizontalGlue()) ;			
 			modeleTableauCR = new ModeleListeCR(modele, controleur) ;
 			tableauCR = new JTable(modeleTableauCR) ;
 			tableauCR.setRowHeight(30) ;
 			
 			JScrollPane spCR = new JScrollPane(tableauCR) ;
-			//spClients.setPreferredSize(new Dimension(1290,420)) ;
 			spCR.setPreferredSize(new Dimension(1090,420)) ;
-			
 			boxTableau.add(spCR) ;
 			
 			boxPrincipal.add(boxEtiquette) ;
@@ -71,6 +71,7 @@ public class VueListeCompteRendu extends JPanel{
 			System.out.println("VueListeClients::actualiser()") ;
 			modeleTableauCR = new ModeleListeCR(modele, controleur) ;
 			tableauCR.setModel(modeleTableauCR) ;
+			this.modele.sortListCR("Croissant");
 			this.appliquerRendu();
 		}
 		/** Application d'un rendu sur les cellules
@@ -89,4 +90,5 @@ public class VueListeCompteRendu extends JPanel{
 			this.tableauCR.getColumn("Affichage du rapport").setCellRenderer(new RenduBoutonCR()) ;
 			this.tableauCR.getColumn("Affichage du rapport").setCellEditor(new EditeurBoutonCR(new JCheckBox()));
 		}
+		
 }

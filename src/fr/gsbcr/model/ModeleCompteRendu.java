@@ -13,7 +13,7 @@ import java.util.* ;
  * @author rafina
  *
  */
-public class ModeleCompteRendu {
+public class ModeleCompteRendu  {
 	private List<Collaborateur> visiteur = new ArrayList<Collaborateur>() ;
 	private List<Praticien> praticien = new ArrayList<Praticien>() ;
 	private List<CompteRendu> compteRendus = new ArrayList<CompteRendu>();
@@ -273,5 +273,46 @@ public class ModeleCompteRendu {
 	public void setContreRenduSelected(CompteRendu contreRenduSelected) {
 		this.contreRenduSelected = contreRenduSelected;
 	}
+	
+	/** Trier la liste des praticiens hésitants
+	 * 
+	 * @param critere Critère de tri
+	 */
+	public void sortListPraticien(String critere){
+		switch(critere){
+		case "coefN":
+			System.out.println("aaaaaa");
+			Collections.sort(this.praticien,Praticien.COEFN_COMPARATOR.reversed());
+			break;
+		case "coefC":
+			System.out.println("eeeeee");
+			Collections.sort(this.praticien,Praticien.COEFCF_COMPARATOR.reversed());
+			break;
+		case "TpsC":
+			System.out.println("iiiiiii");
+			//Collections.sort(this.praticien,Collections.reverseOrder());
+			break;
+		}
+		
+		
+	}
+	
+	/** Trier la liste des comptes-rendus
+	 * 
+	 * @param critere Critère de tri
+	 */
+	public void sortListCR(String critere){
+		switch(critere){
+		case "Croissant":
+			Collections.sort(this.compteRendus);
+			break;
+		/*case "Décroissant":
+			Collections.sort(this.compteRendus,Collections.reverseOrder());
+			break;*/
+		}
+		
+		
+	}
+
 
 }

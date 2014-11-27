@@ -60,8 +60,6 @@ public class EcouteurBoutonCR implements ActionListener {
 		System.out.println("EcouteurBoutonCR::actionPerformed()") ;
 		ModeleCompteRendu modele = ((ModeleListeCR)this.table.getModel()).getModele() ;
 		Controleur controleur = ((ModeleListeCR)this.table.getModel()).getControleur() ;
-		//String sBilan =  ((ModeleListeCR)this.table.getModel()).getBilan(this.row) ;
-		//String sMotif =((ModeleListeCR)this.table.getModel()).getMotif(this.row) ;
 		int iNumRapport =((ModeleListeCR)this.table.getModel()).getNumRapport(this.row) ;
 		String sColMatricule =((ModeleListeCR)this.table.getModel()).getMatricule(this.row) ;
 		String sRapLu =  ((ModeleListeCR)this.table.getModel()).getEtat(this.row) ;
@@ -79,11 +77,6 @@ public class EcouteurBoutonCR implements ActionListener {
 							e1.printStackTrace();
 						}
 					}
-					/*Object[] content = {"Rapport numéro : "+iNumRapport,"\n","Bilan : "+sBilan,"Motif : "+sMotif,"\n"};
-					JOptionPane.showOptionDialog(null,content, "Détails",
-					JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
-					null, null, null);
-					break ;*/
 					modele.rechercherCR(sColMatricule, iNumRapport);
 					controleur.visualiserInfoCR();
 					

@@ -1,6 +1,10 @@
 package fr.gsbcr.views;
 
 import java.awt.* ;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.* ;
 import javax.swing.table.TableModel;
@@ -9,13 +13,14 @@ import javax.swing.table.TableRowSorter;
 import fr.gsbcr.controller.Controleur;
 import fr.gsbcr.model.ModeleCompteRendu;
 import fr.gsbcr.model.ModeleListePraticienH;
+import fr.gsbcr.model.ModeleListeVisiteur;
 
 /** Vue dédiée à l'affichage de la liste des praticiens hésitants
  * 
  * @author rafina
  *
  */
-public class VueListePraticienH extends JPanel {
+public class VueListePraticienH extends JPanel implements ItemListener {
 
 	private static final long serialVersionUID = 1L;
 	private Controleur controleur ;
@@ -39,47 +44,37 @@ public class VueListePraticienH extends JPanel {
 		Box boxPrincipal = Box.createVerticalBox() ;
 		Box boxEtiquette = Box.createHorizontalBox() ;
 		Box boxTableau = Box.createHorizontalBox() ;
+		Box boxEtiquetteSort = Box.createHorizontalBox();
 
 		boxEtiquette.add(new JLabel("Praticiens Hésitants :")) ;
 		boxEtiquette.add(Box.createHorizontalGlue()) ;
-		
+		boxEtiquetteSort.add(new JLabel("Trier par : "));
+		JComboBox<String> combo = new JComboBox<String>();
+		combo.addItem("Coefficient de confiance");
+		combo.addItem("Temps écoulé");
+		combo.addItem("Coefficient de notoriété");
+		combo.addItemListener(this);
+		boxEtiquetteSort.add(combo);
+		boxEtiquetteSort.add(Box.createHorizontalGlue()) ;
+		Box boxVide = Box.createHorizontalBox();
+		boxVide.add(Box.createHorizontalGlue()) ;
 		modeleTableauPraticienH = new ModeleListePraticienH(modele) ;
 		tableauPraticienH = new JTable(modeleTableauPraticienH) ;
 		//tableauPraticienH.setAutoCreateRowSorter(true);
 	
-		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(modeleTableauPraticienH);
+		/*TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(modeleTableauPraticienH);
 	    tableauPraticienH.setRowSorter(sorter);
 		tableauPraticienH.getRowSorter().toggleSortOrder(1);
-	    //((DefaultRowSorter<TableModel, Integer>) tableauPraticienH.getRowSorter()).setSortable(1,false);
-	    sorter.setSortable(2, false);
-	    sorter.setSortsOnUpdates(true);
-	    //sorter.setComparator(5, modeleTableauPraticienH.compare(c1, c2));
-	  
-	    
-        //Evenement : click sur une ligne du tableau
-	  /*  tableauPraticienH.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                //N° de la ligne séléctionnée
-                int row =  tableauPraticienH.getSelectedRow();
-                //N° de ligne du tableau trié
-                int sortedRow =  tableauPraticienH.convertRowIndexToModel(row);
-                Object pe =  tableauPraticienH.getModel().getValueAt(sortedRow, 0);
-                Object pr =  tableauPraticienH.getModel().getValueAt(sortedRow, 1);
-                Object px = tableauPraticienH.getModel().getValueAt(sortedRow, 2);
-                String s=pe + " a pris un " + pr + " au prix de " + px + " Eur";
-                System.out.println(s);
-            }
-        });*/
-
-
-
+	    //sorter.setSortsOnUpdates(true);*/
 		tableauPraticienH.setRowHeight(30) ;
+		
 		
 		JScrollPane spPraticienH = new JScrollPane(tableauPraticienH) ;
 		spPraticienH.setPreferredSize(new Dimension(1090,420)) ;
 		
+		boxPrincipal.add(boxEtiquetteSort) ;
+		boxPrincipal.add(boxVide);
 		boxTableau.add(spPraticienH) ;
-		
 		boxPrincipal.add(boxEtiquette) ;
 		boxPrincipal.add(boxTableau) ;
 		
@@ -95,5 +90,28 @@ public class VueListePraticienH extends JPanel {
 		modeleTableauPraticienH = new ModeleListePraticienH(modele) ;
 		tableauPraticienH.setModel(modeleTableauPraticienH) ;
 	}
+	
+	public void itemStateChanged(ItemEvent e) {
+		String choix = (String) e.getItem();
+		if(choix == "Coefficient de confiance"){
+			System.out.println("CoefC");
+			modele.sortListPraticien("coefC");
+			this.actualiser();
+		}
+		else if (choix == "Coefficient de notoriété"){
+			//DESC
+			System.out.println("CoefN");
+			modele.sortListPraticien("coefN");
+			this.actualiser();
+		}
+		else if (choix == "Temps écoulé"){
+			//DESC
+			System.out.println("TpsC");
+			modele.sortListPraticien("TpsC");
+			this.actualiser();
+		}
+
+	}
+
 	
 }

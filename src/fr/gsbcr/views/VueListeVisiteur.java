@@ -4,6 +4,7 @@ import java.awt.Dimension;
 
 import javax.swing.Box;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -42,9 +43,7 @@ public class VueListeVisiteur extends JPanel {
 		Box boxPrincipal = Box.createVerticalBox() ;
 		Box boxEtiquette = Box.createHorizontalBox() ;
 		Box boxTableau = Box.createHorizontalBox() ;
-				
 		boxEtiquette.add(new JLabel("Visiteurs :")) ;
-		boxEtiquette.add(Box.createHorizontalGlue()) ;
 		modeleTableauVisiteur= new ModeleListeVisiteur(modele,controleur) ;
 		tableauVisiteur= new JTable(modeleTableauVisiteur) ;
 		tableauVisiteur.setRowHeight(30) ;
@@ -54,7 +53,6 @@ public class VueListeVisiteur extends JPanel {
 		JScrollPane spVisiteur = new JScrollPane(tableauVisiteur) ;
 		//spLocations.setPreferredSize(new Dimension(1290,420)) ;
 		spVisiteur.setPreferredSize(new Dimension(1090,420)) ;
-
 		boxTableau.add(spVisiteur) ;
 		
 		boxPrincipal.add(boxEtiquette) ;

@@ -1,12 +1,13 @@
 package fr.gsbcr.entities;
 
+import java.util.Comparator;
 import java.util.GregorianCalendar;
 
 /** Classe Praticien de l'application
  * @author rafina
  *
  */
-public class Praticien {
+public class Praticien  {
 	private int praNum;
 	private String praNom;
 	private String praPrenom;
@@ -196,6 +197,43 @@ public class Praticien {
 				+ ", praCP=" + praCP + ", praVille=" + praVille + ", praCoefN="
 				+ praCoefN + ", praCoefConf=" + praCoefConf + "]";
 	}
+
+
+		public final static Comparator<Praticien> COEFN_COMPARATOR = new Comparator<Praticien>() {
+			@Override
+			public int compare(Praticien o1, Praticien o2) {
+				if(o1.getPraCoefN() < o2.getPraCoefN()){
+					return -1;
+				
+				}
+				else if(o1.getPraCoefN() == o2.getPraCoefN()){
+					return 0;
+				}
+				else {
+					return 1;
+				}
+			}	 
+	    };
+	    
+		public final static Comparator<Praticien> COEFCF_COMPARATOR = new Comparator<Praticien>() {
+			@Override
+			public int compare(Praticien o1, Praticien o2) {
+				int returnValue = 0;
+				if(o1.getPraCoefConf() < o2.getPraCoefConf()){
+					return 1;
+				
+				}
+				else if(o1.getPraCoefConf() == o2.getPraCoefConf()){
+					return 0;
+				}
+				else if(o1.getPraCoefConf() > o2.getPraCoefConf()){
+					return -1;
+				}
+				return returnValue;
+			}	 
+	    };
+
+
 	
 
 }

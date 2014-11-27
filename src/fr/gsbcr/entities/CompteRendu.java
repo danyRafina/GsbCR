@@ -5,7 +5,11 @@ import java.util.Date;
 /** Classe Compre Rendu de l'application
  * @author rafina
  */
-public class CompteRendu {
+/**
+ * @author rafina
+ *
+ */
+public class CompteRendu implements Comparable<CompteRendu>{
 	private Collaborateur collaborateur;
 	private int iNumCR;
 	private Praticien praticien;
@@ -199,6 +203,19 @@ public class CompteRendu {
 				+ ", dDateVisite=" + dDateVisite + ", sBilanCR=" + sBilanCR
 				+ ", sMotifCR=" + sMotifCR + ", iCoefConfCR=" + iCoefConfCR
 				+ ", byEstLuCR=" + byEstLuCR + "]";
+	}
+	
+	@Override
+	public int compareTo(CompteRendu o) {
+			if(this.getdDateVisite().before(o.getdDateVisite())){
+				return -1;
+			}
+			else if(this.getdDateVisite().after(o.getdDateVisite())){
+				return 1;
+			}
+			else{
+				return 0;
+			}
 	}
 	
 }
