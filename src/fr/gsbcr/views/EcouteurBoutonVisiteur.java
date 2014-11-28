@@ -2,6 +2,7 @@ package fr.gsbcr.views;
 
 import javax.swing.table.AbstractTableModel ;
 
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -52,7 +53,6 @@ public class EcouteurBoutonVisiteur implements ActionListener {
 	 * @param table Le nouveau tableau
 	 */
 	public void setTable(JTable table){
-		//System.out.println("EcouteurBoutonLocation::setTable()") ;
 		this.table = table ;
 	}
 	
@@ -77,6 +77,7 @@ public class EcouteurBoutonVisiteur implements ActionListener {
 				JLabel lbAnnee = new JLabel("Année");
 				lbMois.setLabelFor(mcMonth);
 				lbAnnee.setLabelFor(ycYear);
+				SystemColor.desktop.getBlue();
 				String sMsgHeader = "Choisir le mois et l'année du compte-rendu pour : "+sColNom + " "+ sColPrenom;
 				Object[] content = {sMsgHeader,lbMois,mcMonth,lbAnnee,ycYear};
 				int iResultJP = JOptionPane.showOptionDialog(null,content, "Choix",
@@ -84,7 +85,6 @@ public class EcouteurBoutonVisiteur implements ActionListener {
 				null, null, null);
 				if (iResultJP == JOptionPane.YES_OPTION){
 					try {
-						System.out.println("YEAR "+ycYear.getYear()+" "+ mcMonth.getMonth());
 						mcMonth.setMonth(mcMonth.getMonth() + 1);
 						boolean success = modele.getCR(ycYear.getYear(),mcMonth.getMonth(),sColMatricule);
 						if(success == true){

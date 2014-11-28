@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -88,7 +89,7 @@ public class VueConnexion extends JPanel implements ActionListener {
 					boolean success = false;
 					try {
 						success = this.controleur.seConnecter(tfUserId.getText(),pfUserPass.getText());
-					} catch (SQLException e) {
+					} catch (SQLException | ParseException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}

@@ -91,6 +91,9 @@ public class VueListePraticienH extends JPanel implements ItemListener {
 		tableauPraticienH.setModel(modeleTableauPraticienH) ;
 	}
 	
+	/** Ecouteur du Trieur
+	 * @param e Le critière de tri
+	 */
 	public void itemStateChanged(ItemEvent e) {
 		String choix = (String) e.getItem();
 		if(choix == "Coefficient de confiance"){
@@ -99,13 +102,11 @@ public class VueListePraticienH extends JPanel implements ItemListener {
 			this.actualiser();
 		}
 		else if (choix == "Coefficient de notoriété"){
-			//DESC
 			System.out.println("CoefN");
 			modele.sortListPraticien("coefN");
 			this.actualiser();
 		}
 		else if (choix == "Temps écoulé"){
-			//DESC
 			System.out.println("TpsC");
 			modele.sortListPraticien("TpsC");
 			this.actualiser();

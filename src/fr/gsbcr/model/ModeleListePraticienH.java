@@ -39,7 +39,6 @@ public class ModeleListePraticienH extends AbstractTableModel {
 	 * @return Le nombre de lignes
 	 */
 	public int getRowCount(){
-		//System.out.println("ModeleListeClients::getRowCount()") ;
 		return praticienH.size() ;
 	}
 
@@ -48,7 +47,6 @@ public class ModeleListePraticienH extends AbstractTableModel {
 	 * @return Le nombre de colonnes
 	 */
 	public int getColumnCount(){
-		//System.out.println("ModeleListeClients::getColumnCount()") ;
 		return entetes.length ;
 	}
 	
@@ -84,12 +82,7 @@ public class ModeleListePraticienH extends AbstractTableModel {
 			case 4 : 
 				return praticienH.get(indiceLigne).getPraCoefConf() ;
 			case 5 : 
-			try {
-				return modele.diffEnJour(praticienH.get(indiceLigne).getPraNum());
-			} catch (SQLException | ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				return praticienH.get(indiceLigne).getiTpsEcouleDV();	
 			default :
 				return null ;
 		}

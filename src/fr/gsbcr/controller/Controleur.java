@@ -5,6 +5,7 @@ import fr.gsbcr.model.ModeleCompteRendu;
 import fr.gsbcr.views.GuiGsbCR;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 
 /** Contrôleur de l'application
  * @author rafina
@@ -46,6 +47,7 @@ public class Controleur {
 	 */
 	public void visualiserPraticienH(){
 		System.out.println("Controleur::visualiserPraticienH()") ;
+		this.visualiserModele();
 		this.vuePrincipale.changerDeVue("Liste praticiens hesitants");                                                                                                                                                        
 	}
 	
@@ -90,8 +92,9 @@ public class Controleur {
 	 * @param sPasswd Le mot de passe du délégué
 	 * @throws SQLException Peut générer une exception sql
 	 * @return Vrai si il existe un délégué avec cet indentifiant et mot de passe
+	 * @throws ParseException 
 	 */
-	public boolean seConnecter(String sLogin, String sPasswd ) throws SQLException{
+	public boolean seConnecter(String sLogin, String sPasswd ) throws SQLException, ParseException{
 		boolean bSuccess = true;
 		System.out.println("Controleur::seConnecter()") ;
 		boolean coOK = this.modele.seConnecter(sLogin,sPasswd) ;

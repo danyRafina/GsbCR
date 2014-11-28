@@ -35,8 +35,6 @@ public class RenduCelluleCR extends DefaultTableCellRenderer {
 															boolean hasFocus, int row, int column){
 		super.getTableCellRendererComponent(table,value,isSelected,hasFocus,row,column) ;
 		
-		//System.out.println("RenduCelluleLocation::getTableCellRendererComponent()") ;
-		
 		String etat = ((ModeleListeCR)table.getModel()).getEtat(row) ;
 		
 		switch(etat){

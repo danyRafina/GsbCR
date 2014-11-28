@@ -32,15 +32,21 @@ public class ModeleCompteRendu  {
 	}
 	
 	/** Peupler la liste des Praticiens hésitants
-	 * @throws SQLException 
+	 * @throws SQLException Peut générer une exception SQL
+	 * @throws ParseException  
 	 * 
 	 */
 	
-	private void initListePraticienH() throws SQLException {
+	private void initListePraticienH() throws SQLException, ParseException {
 		this.result= Queries.queryPraticienH();
 		while (result.next()) {
-			this.praticien.add(new Praticien(result.getInt("PRA_NUM"),result.getString("PRA_NOM"), result.getString("PRA_PRENOM"), result.getString("PRA_ADRESSE"), result.getInt("PRA_CP"),result.getString("PRA_VILLE"),result.getFloat("PRA_COEFNOTORIETE"),result.getInt("COEF_CONF")));
-		}	
+			this.praticien.add(new Praticien(result.getInt("PRA_NUM"),result.getString("PRA_NOM"),result.getString("PRA_PRENOM"), result.getString("PRA_ADRESSE"), result.getInt("PRA_CP"),result.getString("PRA_VILLE"),result.getFloat("PRA_COEFNOTORIETE"),result.getInt("COEF_CONF"),0));
+		}
+		for(Praticien unPraticien : praticien){
+
+			unPraticien.setiTpsEcouleDV(this.diffEnJour(unPraticien.getPraNum()));
+		}
+		
 	}
 
 	/** Rechercher l'équivalent du chiffre réprésentant l'état de lecture d'un compte rendu à une chaîne de caractère
@@ -140,8 +146,9 @@ public class ModeleCompteRendu  {
 	 * @param mdp Mot de passe de l'utilisateur
 	 * @return Vrai si l'identifiant et le mot de passe correspondent
 	 * @throws SQLException  Peut générer une exception sql
+	 * @throws ParseException 
 	 */
-	public boolean seConnecter(String login, String mdp) throws SQLException {
+	public boolean seConnecter(String login, String mdp) throws SQLException, ParseException {
 		boolean bToAccess = false;
 		this.result = Queries.queryDelegue(login,mdp);
 		while (result.next()) {
@@ -281,16 +288,13 @@ public class ModeleCompteRendu  {
 	public void sortListPraticien(String critere){
 		switch(critere){
 		case "coefN":
-			System.out.println("aaaaaa");
 			Collections.sort(this.praticien,Praticien.COEFN_COMPARATOR.reversed());
 			break;
 		case "coefC":
-			System.out.println("eeeeee");
 			Collections.sort(this.praticien,Praticien.COEFCF_COMPARATOR.reversed());
 			break;
 		case "TpsC":
-			System.out.println("iiiiiii");
-			//Collections.sort(this.praticien,Collections.reverseOrder());
+			Collections.sort(this.praticien,Praticien.TPSE_COMPARATOR.reversed());
 			break;
 		}
 		

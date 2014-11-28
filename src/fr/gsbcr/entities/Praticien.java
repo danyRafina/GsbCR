@@ -16,9 +16,26 @@ public class Praticien  {
 	private String praVille;
 	private float praCoefN;
 	private int praCoefConf;
-	private GregorianCalendar gcDateVisite;
-	
-	
+	private GregorianCalendar gcDateVisite;;
+	private long iTpsEcouleDV ;
+
+
+	/** Obtenir le temps écoulé depuis la dernière visite
+	 * @return Le temps écoulé
+	 */
+	public long getiTpsEcouleDV() {
+		return iTpsEcouleDV;
+	}
+
+
+	/** Modifier le temps écoulé depuis la dernière visite
+	 * @param iTpsEcouleDV Le nouveau temps écoulé à définir
+	 */
+	public void setiTpsEcouleDV(long iTpsEcouleDV) {
+		this.iTpsEcouleDV = iTpsEcouleDV;
+	}
+
+
 	/** Obtenir la date de visite 
 	 * @return La date de visite
 	 */
@@ -44,9 +61,10 @@ public class Praticien  {
 	 * @param praVille Ville du praticien
 	 * @param praCoefN Coefficient de notoriété du praticien
 	 * @param praCoefConf Coefficient de confiance du praticien
+	 * @param iTpsEcouleDV Temps écoulé depuis la dernière visite
 	 */
 	public Praticien(int praNum, String praNom, String praPrenom,
-			String praAdresse, int praCP, String praVille, float praCoefN,int praCoefConf) {
+			String praAdresse, int praCP, String praVille, float praCoefN,int praCoefConf,long iTpsEcouleDV) {
 		super();
 		this.praNum = praNum;
 		this.praNom = praNom;
@@ -56,6 +74,7 @@ public class Praticien  {
 		this.praVille = praVille;
 		this.praCoefN = praCoefN;
 		this.praCoefConf = praCoefConf;
+		this.iTpsEcouleDV = iTpsEcouleDV;
 	}
 
 
@@ -198,42 +217,67 @@ public class Praticien  {
 				+ praCoefN + ", praCoefConf=" + praCoefConf + "]";
 	}
 
+	/** Comparateur du coefficient de notoriété
+	 *                                           
+	 */
+	public final static Comparator<Praticien> COEFN_COMPARATOR = new Comparator<Praticien>() {
+		@Override
+		public int compare(Praticien o1, Praticien o2) {
+			if(o1.getPraCoefN() < o2.getPraCoefN()){
+				return -1;
 
-		public final static Comparator<Praticien> COEFN_COMPARATOR = new Comparator<Praticien>() {
-			@Override
-			public int compare(Praticien o1, Praticien o2) {
-				if(o1.getPraCoefN() < o2.getPraCoefN()){
-					return -1;
-				
-				}
-				else if(o1.getPraCoefN() == o2.getPraCoefN()){
-					return 0;
-				}
-				else {
-					return 1;
-				}
-			}	 
-	    };
-	    
-		public final static Comparator<Praticien> COEFCF_COMPARATOR = new Comparator<Praticien>() {
-			@Override
-			public int compare(Praticien o1, Praticien o2) {
-				int returnValue = 0;
-				if(o1.getPraCoefConf() < o2.getPraCoefConf()){
-					return 1;
-				
-				}
-				else if(o1.getPraCoefConf() == o2.getPraCoefConf()){
-					return 0;
-				}
-				else if(o1.getPraCoefConf() > o2.getPraCoefConf()){
-					return -1;
-				}
-				return returnValue;
-			}	 
-	    };
+			}
+			else if(o1.getPraCoefN() == o2.getPraCoefN()){
+				return 0;
+			}
+			else {
+				return 1;
+			}
+		}	 
+	};
 
+	/** Comparateur du coefficient de confiance                                                                                                                                                                                                                                                                                                                                     
+	 *                                           
+	 */
+	public final static Comparator<Praticien> COEFCF_COMPARATOR = new Comparator<Praticien>() {
+		@Override
+		public int compare(Praticien o1, Praticien o2) {
+			int returnValue = 0;
+			if(o1.getPraCoefConf() < o2.getPraCoefConf()){
+				return 1;
 
+			}
+			else if(o1.getPraCoefConf() == o2.getPraCoefConf()){
+				return 0;
+			}
+			else if(o1.getPraCoefConf() > o2.getPraCoefConf()){
+				return -1;
+			}
+			return returnValue;
+		}	 
+	};
 	
+	/** Comparateur du temps écoulé depuis la dernière visite                                                                                                                                                                                                                                                                                                                
+	 *                                           
+	 */
+	public final static Comparator<Praticien> TPSE_COMPARATOR = new Comparator<Praticien>() {
+		@Override
+		public int compare(Praticien o1, Praticien o2) {
+			int returnValue = 0;
+			if(o1.getiTpsEcouleDV() < o2.getiTpsEcouleDV()){
+				return -1;
+
+			}
+			else if(o1.getiTpsEcouleDV()  == o2.getiTpsEcouleDV()){
+				return 0;
+			}
+			else if(o1.getiTpsEcouleDV() > o2.getiTpsEcouleDV()){
+				return 1;
+			}
+			return returnValue;
+		}	 
+	};
+
+
 
 }
