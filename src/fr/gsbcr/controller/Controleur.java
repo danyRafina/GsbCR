@@ -92,7 +92,7 @@ public class Controleur {
 	 * @param sPasswd Le mot de passe du délégué
 	 * @throws SQLException Peut générer une exception sql
 	 * @return Vrai si il existe un délégué avec cet indentifiant et mot de passe
-	 * @throws ParseException 
+	 * @throws ParseException  Peut généré une erreur 
 	 */
 	public boolean seConnecter(String sLogin, String sPasswd ) throws SQLException, ParseException{
 		boolean bSuccess = true;

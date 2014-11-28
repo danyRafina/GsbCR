@@ -48,7 +48,7 @@ public class Queries {
 	}
 	
 	/** Récupération des visiteurs travaillant pour le délégué connecté
-	 * @param sMatriculeVis Matricule du délégué connecté
+	 * @param sMatriculeDeg Matricule du délégué connecté
 	 * @return Résultat de la requête 
 	 * @throws SQLException  Peut générer une exception sql
 	 */
@@ -81,7 +81,6 @@ public class Queries {
 	
 	/** Définir un état de lecture pour un compte-rendu
 	 * @param iRapNum Numéro du compte-rendu
-	 * @return Résultat de la requête 
 	 * @throws SQLException  Peut générer une exception sql
 	 */
 	public static void setRapLu(int iRapNum) throws SQLException{

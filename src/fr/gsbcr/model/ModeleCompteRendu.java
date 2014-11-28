@@ -77,7 +77,6 @@ public class ModeleCompteRendu  {
 	 * 
 	 * @param sColMatricule Matricule du visiteur
 	 * @param iNumCR Numéro du compte-rendu 
-	 * @return Le compte-rendu recherché
 	 */
 	public void rechercherCR(String sColMatricule, int iNumCR){
 		for(CompteRendu unCompteRendu : compteRendus){
@@ -146,7 +145,7 @@ public class ModeleCompteRendu  {
 	 * @param mdp Mot de passe de l'utilisateur
 	 * @return Vrai si l'identifiant et le mot de passe correspondent
 	 * @throws SQLException  Peut générer une exception sql
-	 * @throws ParseException 
+	 * @throws ParseException Peut générer une exception
 	 */
 	public boolean seConnecter(String login, String mdp) throws SQLException, ParseException {
 		boolean bToAccess = false;
@@ -243,7 +242,7 @@ public class ModeleCompteRendu  {
 	
 	/** Initialisation de la liste des visiteurs en fonction du délégué connecté
 	 * 
-	 * @throws SQLException
+	 * @throws SQLException Peut générer une exception SQL
 	 */
 	public void initListeVis() throws SQLException{
 		
