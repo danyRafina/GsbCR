@@ -171,6 +171,7 @@ public class ModeleCompteRendu  {
 	 * @throws SQLException  Peut générer une exception sql
 	 */
 	public boolean getCR(int year,int month,String colMatricule) throws SQLException{
+		this.compteRendus.clear();
 		boolean bSuccess = false;
 		this.compteRendus.clear();
 		this.result= Queries.queryCompteRendu(colMatricule,year,month);
@@ -258,7 +259,7 @@ public class ModeleCompteRendu  {
 	 */
 	public void autoReset(){
 		this.visiteur = new ArrayList<Collaborateur>() ;
-		this.praticien = new ArrayList<Praticien>() ;
+		this.praticien = new ArrayList<Praticien>();
 		this.compteRendus = new ArrayList<CompteRendu>();
 		this.result = null;
 		this.newDate = null ;
@@ -277,6 +278,7 @@ public class ModeleCompteRendu  {
 	 * @param contreRenduSelected Le compte-rendu à définir
 	 */
 	public void setContreRenduSelected(CompteRendu contreRenduSelected) {
+		this.contreRenduSelected = null;
 		this.contreRenduSelected = contreRenduSelected;
 	}
 	

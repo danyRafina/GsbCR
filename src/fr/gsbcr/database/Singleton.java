@@ -15,8 +15,11 @@ import fr.gsbcr.model.ModeleException;
  */
 public class Singleton {
 	private String connectionInf = "jdbc:mysql://localhost:3306/GsbCRSlam";
+	//private String connectionInf = "jdbc:mysql://172.16.70.101/GsbCRSlam";
 	private String userName ="root";
 	private String userPass ="mysql";
+	//private String userName ="gsb";
+	//private String userPass ="azerty";
 	private static Statement stmt ;
 	private static Connection instance;
 	private static Singleton aInstance;
